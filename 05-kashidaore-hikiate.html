@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>貸倒引当金 | 簿記2級</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#888;--border:#e5e5e5;--amber:#BA7517;--green:#1D9E75;--red:#A32D2D;--amber-bg:#FAEEDA;--green-bg:#E1F5EE;--purple-bg:#EEEDFE;--red-bg:#FAEBEB;}
+@media(prefers-color-scheme:dark){:root{--bg:#111;--card:#1e1e1e;--text:#f0ede6;--sub:#999;--border:#333;--amber-bg:#412402;--green-bg:#04342C;--purple-bg:#26215C;--red-bg:#3D0A0A;}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px}
+.app{max-width:600px;margin:0 auto}
+.pbar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.phase{font-size:12px;color:var(--sub);min-width:68px}
+.dots{flex:1;display:flex;gap:3px}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .3s;flex-shrink:0}
+.dot.act{background:var(--amber)}.dot.dn{background:var(--green)}
+.slbl{font-size:12px;color:var(--sub);min-width:36px;text-align:right}
+.card{background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--border)}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block;margin-bottom:12px}
+.ba{background:var(--amber-bg);color:#854F0B}.bt{background:var(--green-bg);color:#0F6E56}.bp{background:var(--purple-bg);color:#3C3489}.bb{background:#E6F1FB;color:#185FA5}
+.ibox{width:52px;height:52px;border-radius:14px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+button{font-family:inherit;font-size:15px;font-weight:600;padding:13px 20px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text);min-height:48px;-webkit-appearance:none}
+button:active{opacity:.8}
+.btn-next{float:right;margin-top:16px}
+.btn-full{width:100%;margin-top:12px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--text);min-height:52px;-webkit-appearance:none;line-height:1.5;font-family:inherit}
+.opt:disabled{cursor:default}
+.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+@media(prefers-color-scheme:dark){.opt.oc{background:#173404!important;border-color:#3B6D11!important;color:#C0DD97!important}.opt.ow{background:#501313!important;border-color:#A32D2D!important;color:#F7C1C1!important}}
+.tbl{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:10px 0}
+.tside{padding:12px;background:var(--bg)}
+.tdiv{background:var(--border);width:1px}
+.jl{opacity:0;transform:translateX(-10px);transition:opacity .5s,transform .5s}
+.jr{opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s}
+.jl.sh,.jr.sh{opacity:1;transform:translateX(0)}
+.jlbl{font-size:11px;color:var(--sub);background:var(--bg);padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;border:1px solid var(--border)}
+.entry{display:flex;justify-content:space-between;padding:8px 0;font-size:14px}
+.entry+.entry{border-top:1px solid var(--border)}
+.hint-box{background:var(--green-bg);border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
+.feedback{padding:14px;border-radius:12px;margin-top:12px;border:1.5px solid}
+.feedback.ok{background:#E1F5EE;border-color:#639922}
+.feedback.ng{background:#FCEBEB;border-color:#A32D2D}
+@media(prefers-color-scheme:dark){.hint-box{background:var(--green-bg);border-color:#1D5040}.feedback.ok{background:#04342C;border-color:#3B6D11}.feedback.ng{background:#501313;border-color:#A32D2D}}
+.pbfill{height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex:1}
+.pbbar{height:100%;background:var(--amber);border-radius:2px}
+.calc-box{background:var(--bg);border-radius:12px;padding:14px;margin-top:12px;border:1px solid var(--border)}
+.crow{display:flex;justify-content:space-between;padding:4px 0;font-size:14px}
+.crow.total{border-top:1px solid var(--border);margin-top:4px;padding-top:8px;font-weight:700}
+@keyframes su{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.su{animation:su .3s ease}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="pbar">
+    <span class="phase" id="ph">イントロ</span>
+    <div class="dots" id="dots"></div>
+    <span class="slbl" id="sl">1/11</span>
+  </div>
+  <div id="content"></div>
+</div>
+<script>
+const TOTAL=11;
+const phases=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
+const stories=[null,
+  {badge:'STEP 1',bc:'ba',icon:'😟',title:'「売掛金が返ってこないかも...」',
+   body:'山田さんの会社には売掛金が2,000,000円ある。取引先の資金繰りが怪しい。でも、まだ貸し倒れと確定したわけじゃない。決算でどう処理する？',ex:null},
+  {badge:'STEP 2',bc:'ba',icon:'⚖️',title:'確定してない損失でも計上する',
+   body:'会計には「保守主義の原則」がある。不確実でも将来の損失が予測できるなら、今から費用に計上しておく。利益を多く見せるより、正確に見せることが大切。',ex:null},
+  {badge:'STEP 3',bc:'bt',icon:'🧮',title:'貸倒引当金の計算',
+   body:'売掛金残高2,000,000円に貸倒実績率1%をかけて見積もる。2,000,000円×1%＝20,000円。この金額を「貸倒引当金」として積み立てる。',ex:'calc'},
+  {badge:'STEP 4',bc:'bt',icon:'📆',title:'翌期に実際に貸し倒れたら？',
+   body:'実際に取引先が倒産して売掛金20,000円が回収不能に。このとき「引当金を取り崩して」処理する。すでに費用計上済みなので、翌期の損益には影響しない。',ex:null},
+  {badge:'STEP 5',bc:'bb',icon:'⚠️',title:'引っ掛けポイント：借方は「繰入」',
+   body:'設定時の借方は「貸倒引当金」ではなく「貸倒引当金繰入」。「引当金繰入」は費用勘定、「引当金」は評価勘定（B/Sの売掛金控除）。名前が似てて混同しやすい！',ex:null},
+];
+const quiz=[
+  {q:'まだ貸し倒れが確定していないのに引当金を計上する根拠は？',
+   opts:['費用収益対応の原則','取得原価主義の原則','保守主義の原則','継続性の原則'],
+   ans:2,hint:'保守主義の原則＝不確実な損失でも予測できれば計上する。利益を過大に見せないための原則。'},
+  {q:'売掛金残高2,000,000円・貸倒実績率1%の場合、貸倒引当金繰入の金額は？',
+   opts:['10,000円','20,000円','200,000円','2,000,000円'],
+   ans:1,hint:'2,000,000円×1%＝20,000円。売掛金残高に実績率をかけるだけ。'},
+  {q:'【引っ掛け】決算時に貸倒引当金を設定するときの仕訳で、借方に来るのはどれ？',
+   opts:['貸倒引当金（評価勘定）','貸倒損失（費用）','貸倒引当金繰入（費用）','売掛金（資産）'],
+   ans:2,hint:'借方は「貸倒引当金繰入」（費用）、貸方が「貸倒引当金」（評価勘定）。繰入と引当金は別の勘定科目。'},
+];
+let cur=0,score=0,answered=false,chosen=-1;
+function mkDots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}}
+function render(){
+  document.getElementById('ph').textContent=phases[cur];
+  document.getElementById('sl').textContent=(cur+1)+'/'+TOTAL;
+  mkDots();const c=document.getElementById('content');
+  if(cur===0){c.innerHTML=`<div class="card su" style="text-align:center;padding:32px 20px">
+    <p style="font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 12px">簿記2級 × 引当金</p>
+    <h1 style="font-size:21px;font-weight:700;line-height:1.6;margin:0 0 12px">売掛金が返ってこないかも。<br>でもまだ確定してない。<br>どう処理する？</h1>
+    <p style="font-size:15px;color:var(--sub);line-height:1.7;margin:0 0 24px">「保守主義の原則」から<strong style="color:var(--text)">貸倒引当金の本質</strong>まで。</p>
+    <button class="btn-full" onclick="go(1)">学習スタート →</button>
+  </div>`;return;}
+  if(cur>=1&&cur<=5){
+    const s=stories[cur];let ex='';
+    if(s.ex==='calc')ex=`<div class="calc-box"><div class="crow"><span style="color:var(--sub)">売掛金残高</span><span>2,000,000円</span></div><div class="crow"><span style="color:var(--sub)">貸倒実績率</span><span>× 1%</span></div><div class="crow total"><span>貸倒引当金</span><span style="color:var(--amber)">20,000円</span></div></div>`;
+    c.innerHTML=`<div class="card su"><span class="badge ${s.bc}">${s.badge}</span>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="ibox">${s.icon}</div>
+      <div style="flex:1"><h2 style="font-size:17px;font-weight:700;margin:0 0 8px">${s.title}</h2><p style="font-size:15px;color:var(--sub);line-height:1.7">${s.body}</p></div>
+    </div>${ex}
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div></div>`;return;
+  }
+  if(cur===6){
+    c.innerHTML=`<div class="card su"><span class="badge bp">仕訳アニメーション</span>
+    <h2 style="font-size:17px;font-weight:700;margin:0 0 4px">貸倒引当金の2つの仕訳</h2>
+    <p style="font-size:13px;color:var(--sub);margin:0 0 16px">売掛金2,000,000円・貸倒実績率1%・引当金20,000円</p>
+
+    <span class="jlbl">① 決算時（引当金の設定）</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j1"><span style="font-weight:600">貸倒引当金繰入</span><span style="color:var(--amber);font-weight:600">20,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j2"><span style="font-weight:600">貸倒引当金</span><span style="color:var(--green);font-weight:600">20,000</span></div></div>
+    </div></div>
+
+    <span class="jlbl" style="margin-top:14px;display:inline-block">② 実際の貸倒発生時（引当金の取り崩し）</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j3"><span style="font-weight:600">貸倒引当金</span><span style="color:var(--amber);font-weight:600">20,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j4"><span style="font-weight:600">売掛金</span><span style="color:var(--green);font-weight:600">20,000</span></div></div>
+    </div></div>
+
+    <div class="hint-box"><p style="font-size:13px;font-weight:700;margin:0 0 6px;color:#0F6E56">ポイント</p>
+    <p style="font-size:13px;color:var(--sub);line-height:1.6">設定時の借方は<strong style="color:var(--text)">「貸倒引当金繰入」</strong>（費用）。貸方の「貸倒引当金」（評価勘定）とは別の勘定。取り崩し時は引当金を借方に持ってきて売掛金と相殺する。</p></div>
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(7)">クイズへ →</button></div></div>`;
+    setTimeout(()=>{
+      ['j1','j2'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},i*400));
+      ['j3','j4'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},1000+i*400));
+    },150);return;
+  }
+  if(cur>=7&&cur<=9){
+    const qi=cur-7,q=quiz[qi];let fb='';
+    if(answered){const ok=chosen===q.ans;
+      fb=`<div class="feedback ${ok?'ok':'ng'}"><p style="font-size:14px;font-weight:700;color:${ok?'#0F6E56':'#A32D2D'};margin:0 0 ${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>${q.hint?`<p style="font-size:13px;color:var(--sub);line-height:1.6;margin:0">💡 ${q.hint}</p>`:''}</div>
+      <button class="btn-full" onclick="go(${cur+1})" style="margin-top:12px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;}
+    c.innerHTML=`<div class="card su">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+      <span class="badge bp" style="margin:0">Q${qi+1}</span>
+      <span style="font-size:12px;color:var(--sub)">${qi+1}/3問</span>
+      <div class="pbfill"><div class="pbbar" style="width:${qi/3*100}%"></div></div>
+    </div>
+    <p style="font-size:16px;font-weight:600;line-height:1.6;margin:0 0 16px">${q.q}</p>
+    <div>${q.opts.map((o,i)=>{let cl='opt';if(answered){if(i===q.ans)cl+=' oc';else if(i===chosen)cl+=' ow';}
+      return`<button class="${cl}" onclick="doAns(${qi},${i})" ${answered?'disabled':''}><span style="color:var(--sub);margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
+    }).join('')}</div>${fb}</div>`;return;
+  }
+  if(cur===10){
+    const pct=Math.round(score/3*100);const col=score===3?'#1D9E75':score===2?'#BA7517':'#A32D2D';
+    c.innerHTML=`<div class="card su" style="text-align:center;padding:28px 20px">
+    <span class="badge ${score===3?'bt':'ba'}" style="margin-bottom:16px">${score===3?'完璧！':score===2?'あと少し！':'もう一回！'}</span>
+    <div style="font-size:54px;font-weight:700;color:${col};margin:8px 0">${score}<span style="font-size:22px;color:var(--sub)">/3</span></div>
+    <p style="color:var(--sub);margin:0 0 20px">${pct}% 正解</p>
+    <div style="text-align:left;background:var(--bg);border-radius:12px;padding:16px;border:1px solid var(--border);margin-bottom:20px">
+      <p style="font-size:13px;font-weight:700;margin:0 0 10px">今日の要点</p>
+      <ul style="padding-left:20px;color:var(--sub);font-size:14px;line-height:2.2">
+        <li>保守主義の原則＝不確実な損失でも予測できれば計上</li>
+        <li>計算：売掛金残高 × 貸倒実績率</li>
+        <li>設定時 借方：貸倒引当金<strong style="color:var(--text)">繰入</strong> ／ 貸方：貸倒引当金</li>
+        <li>取崩時 借方：貸倒引当金 ／ 貸方：売掛金</li>
+      </ul>
+    </div>
+    <button class="btn-full" onclick="restart()">最初からやり直す</button>
+    </div>`;
+  }
+}
+function go(n){cur=n;answered=false;chosen=-1;render();}
+function doAns(qi,i){if(answered)return;answered=true;chosen=i;if(i===quiz[qi].ans)score++;render();}
+function restart(){cur=0;score=0;answered=false;chosen=-1;render();}
+render();
+</script>
+</body>
+</html>
