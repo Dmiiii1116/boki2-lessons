@@ -4,212 +4,154 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>減価償却（定額法）| 簿記2級</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;min-height:100vh;padding:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;padding:16px;min-height:100vh}
 .app{max-width:600px;margin:0 auto}
-.progress-bar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.phase{font-size:12px;color:#888;min-width:60px}
+.pbar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.plbl{font-size:12px;color:#888;min-width:60px}
 .dots{flex:1;display:flex;gap:3px}
-.dot{width:7px;height:7px;border-radius:50%;background:#ddd;transition:background .3s;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .3s}
 .dot.act{background:#BA7517}.dot.dn{background:#1D9E75}
-.step-lbl{font-size:12px;color:#888;min-width:36px;text-align:right}
-.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.slbl{font-size:12px;color:#888;min-width:36px;text-align:right}
+.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
 .badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block;margin-bottom:12px}
 .ba{background:#FAEEDA;color:#854F0B}.bt{background:#E1F5EE;color:#0F6E56}.bp{background:#EEEDFE;color:#3C3489}
-.icon-box{width:52px;height:52px;border-radius:14px;background:#f3f3f1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.icon{width:48px;height:48px;border-radius:14px;background:#f3f3f1;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px}
 h1{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:12px}
-h2{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px}
-p{font-size:15px;line-height:1.7;color:#555}
-button{font-size:15px;font-weight:600;padding:14px 24px;border-radius:12px;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#1a1a1a;min-height:48px;transition:background .15s,transform .1s;-webkit-appearance:none}
-button:active{transform:scale(0.97)}
-.btn-next{margin-top:16px;float:right}
-.btn-full{width:100%;margin-top:12px}
-.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid #e5e5e5;background:#fafafa;color:#1a1a1a;min-height:52px;transition:background .15s;-webkit-appearance:none;line-height:1.5}
-.opt:disabled{cursor:default}
-.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
-.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+h2{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px;color:#1a1a1a}
+.body{font-size:15px;line-height:1.7;color:#555}
+button{font-size:15px;font-weight:600;padding:14px 24px;border-radius:12px;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#1a1a1a;min-height:48px;-webkit-appearance:none;transition:opacity .15s}
+button:active{opacity:.7}
+.btn-r{float:right;margin-top:16px}
+.btn-w{width:100%;margin-top:12px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid #e5e5e5;background:#fafafa;color:#1a1a1a;min-height:52px;-webkit-appearance:none;line-height:1.5;transition:opacity .15s}
+.opt:active{opacity:.7}.opt:disabled{cursor:default}
+.opt.ok{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ng{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+.tbl{border:1px solid #eee;border-radius:12px;overflow:hidden;margin-bottom:14px}
+.tbl-g{display:grid;grid-template-columns:1fr 1px 1fr}
+.tbl-s{padding:12px;background:#fafafa}
+.tbl-d{background:#eee}
+.ent{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;opacity:0;transition:opacity .4s}
+.ent:last-child{border-bottom:none}
+.ent.on{opacity:1}
+.calc{background:#f8f7f4;border-radius:12px;padding:14px;margin-top:12px;border:1px solid #eee}
+.cr{display:flex;justify-content:space-between;padding:4px 0;font-size:14px}
+.cr.tot{border-top:1px solid #ddd;margin-top:4px;padding-top:8px;font-weight:700}
 .grid4{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-top:12px}
-@media(max-width:380px){.grid4{grid-template-columns:repeat(2,1fr)}}
-.grid-item{text-align:center;padding:10px 6px;background:#f8f7f4;border-radius:10px;border:1px solid #eee}
-.jentry{opacity:0;transform:translateX(-12px);transition:opacity .5s,transform .5s}
-.jentry-r{opacity:0;transform:translateX(12px);transition:opacity .5s,transform .5s}
-.jentry-u{opacity:0;transform:translateY(8px);transition:opacity .5s,transform .5s}
-.jentry.show,.jentry-r.show,.jentry-u.show{opacity:1;transform:translate(0)}
-.t-grid{display:grid;grid-template-columns:1fr 1px 1fr;border:1px solid #eee;border-radius:12px;overflow:hidden;margin-bottom:16px}
-.t-side{padding:12px}
-.t-div{background:#eee}
-.hint-box{background:#f0faf5;border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
-.feedback{padding:14px;border-radius:12px;margin-top:12px}
-.feedback.ok{background:#e6f9f0;border:1px solid #639922}
-.feedback.ng{background:#fef0f0;border:1px solid #A32D2D}
-.prog-bar{height:4px;background:#eee;border-radius:2px;overflow:hidden;flex:1}
-.prog-fill{height:100%;background:#BA7517;border-radius:2px;transition:width .3s}
-.result-score{font-size:56px;font-weight:700;text-align:center;padding:8px 0}
-.summary{background:#f8f7f4;border-radius:12px;padding:16px;margin:16px 0}
-.summary ul{padding-left:20px}
-.summary li{font-size:14px;line-height:2.2;color:#555}
-@keyframes slideUp{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.slide-up{animation:slideUp .3s ease}
+@media(max-width:360px){.grid4{grid-template-columns:repeat(2,1fr)}}
+.gi{text-align:center;padding:10px 6px;background:#f8f7f4;border-radius:10px;border:1px solid #eee;opacity:0;transition:opacity .4s}
+.gi.on{opacity:1}
+.hint{background:#f0faf5;border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
+.fb{padding:14px;border-radius:12px;margin-top:12px}
+.fb.ok{background:#e6f9f0;border:1px solid #639922}
+.fb.ng{background:#fef0f0;border:1px solid #A32D2D}
+.pb{height:4px;background:#eee;border-radius:2px;overflow:hidden;flex:1}
+.pbf{height:100%;background:#BA7517;border-radius:2px;transition:width .3s}
+.score{font-size:56px;font-weight:700;text-align:center;padding:8px 0}
+.sum{background:#f8f7f4;border-radius:12px;padding:16px;margin:16px 0}
+.sum ul{padding-left:20px}.sum li{font-size:14px;line-height:2.2;color:#555}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.up{animation:up .25s ease}
 </style>
 </head>
 <body>
 <div class="app">
-  <div class="progress-bar">
-    <span class="phase" id="phase-lbl">イントロ</span>
+  <div class="pbar">
+    <span class="plbl" id="ph">イントロ</span>
     <div class="dots" id="dots"></div>
-    <span class="step-lbl" id="step-lbl">1/11</span>
+    <span class="slbl" id="sl">1/11</span>
   </div>
-  <div id="content"></div>
+  <div id="ct"></div>
 </div>
 <script>
 const TOTAL=11;
-const phases=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
-const quiz=[
+const PH=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
+const ST=[null,
+  {badge:'STEP 1',bc:'ba',icon:'💻',title:'「PC買った！全額、今年の経費にしよう」',body:'山田さんは100,000円のPCを購入。「今年の費用にまとめて入れちゃおう」と思った。一見問題なさそうに見える。',ex:null},
+  {badge:'STEP 2',bc:'ba',icon:'📉',title:'今年の利益が急落...なぜ？',body:'決算書を確認すると、この年だけ利益が激減。PCを買っただけなのに、なぜこんなに減ったの？',ex:null},
+  {badge:'STEP 3',bc:'ba',icon:'💡',title:'問題の本質：費用と収益がズレている',body:'PCは4年間使い続けるもの。なのに費用を1年目に全額計上するのはアンフェア。「費用収益対応の原則」に反してしまう。',ex:null},
+  {badge:'STEP 4',bc:'bt',icon:'📅',title:'解決：4年に分けて費用を計上',body:'100,000円÷4年＝毎年25,000円ずつ費用に。毎年の損益が均等になり、実態を正しく反映できる。',ex:'grid'},
+  {badge:'STEP 5',bc:'bt',icon:'🏆',title:'これが「減価償却」',body:'固定資産の取得価額を、耐用年数にわたって費用として配分する手続き。資産の価値が時間とともに減っていくイメージ。',ex:null},
+];
+const QZ=[
   {q:'減価償却を行う主な目的は何ですか？',opts:['節税のため','費用と収益を対応させるため（費用収益対応の原則）','資産を早く消費するため','現金を節約するため'],ans:1,hint:'PCは4年使うのに1年で全額費用にするのは不公平。費用収益対応の原則がキーワード。'},
   {q:'取得価額100,000円・耐用年数4年・残存価額ゼロ。定額法での年間減価償却費は？',opts:['10,000円','20,000円','25,000円','40,000円'],ans:2,hint:'定額法＝取得価額÷耐用年数。100,000÷4＝25,000円。'},
   {q:'【引っ掛け】減価償却の仕訳（間接法）で、貸方に来るのはどれ？',opts:['減価償却費','備品','現金','減価償却累計額'],ans:3,hint:'間接法では資産を直接減らさず「減価償却累計額」で控除表示。費用は借方の「減価償却費」。'}
 ];
-const stories=[null,
-  {badge:'STEP 1',bc:'ba',icon:'ti-device-laptop',title:'「PC買った！全額、今年の経費にしよう」',body:'山田さんは100,000円のノートPCを購入。「今年の費用にまとめて入れちゃおう」と思った。一見問題なさそう。',ex:null},
-  {badge:'STEP 2',bc:'ba',icon:'ti-chart-line-down',title:'今年の利益が急落...なぜ？',body:'決算書を確認すると、この年だけ利益が激減。PCを買っただけなのに、なぜこんなに減ったの？',ex:null},
-  {badge:'STEP 3',bc:'ba',icon:'ti-bulb',title:'問題の本質：費用と収益がズレている',body:'PCは4年間使い続けるもの。なのに費用を1年目に全部計上するのはアンフェア。「費用収益対応の原則」に反してしまう。',ex:null},
-  {badge:'STEP 4',bc:'bt',icon:'ti-calendar-stats',title:'解決：4年に分けて費用を計上',body:'100,000円÷4年＝毎年25,000円ずつ費用に。毎年の損益が均等になり、実態を正しく反映できる。',ex:'grid'},
-  {badge:'STEP 5',bc:'bt',icon:'ti-certificate',title:'これが「減価償却」',body:'固定資産の取得価額を、耐用年数にわたって費用として配分する手続き。資産の価値が時間とともに減っていくイメージ。',ex:null},
-];
-let cur=0,score=0,answered=false,chosen=-1;
-
-function mkDots(){
-  const d=document.getElementById('dots');d.innerHTML='';
-  for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}
-}
+let cur=0,sc=0,ok=false,ch=-1;
+function dots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}}
 function render(){
-  document.getElementById('phase-lbl').textContent=phases[cur];
-  document.getElementById('step-lbl').textContent=(cur+1)+'/'+TOTAL;
-  mkDots();
-  const c=document.getElementById('content');
-  if(cur===0){
-    c.innerHTML=`<div class="card slide-up" style="text-align:center;padding:32px 20px">
-      <p style="font-size:12px;color:#888;letter-spacing:.08em;margin-bottom:12px">簿記2級 × 減価償却</p>
-      <h1>10万円のPCを買った。<br>全額、今年の経費にしていい？</h1>
-      <p style="margin:12px 0 24px">この疑問から、<strong style="color:#1a1a1a">減価償却の本質</strong>まで。ストーリー→仕訳アニメ→クイズで進みます。</p>
-      <button class="btn-full" onclick="go(1)">学習スタート →</button>
-    </div>`;
-    return;
-  }
+  document.getElementById('ph').textContent=PH[cur];
+  document.getElementById('sl').textContent=(cur+1)+'/'+TOTAL;
+  dots();const c=document.getElementById('ct');
+  if(cur===0){c.innerHTML=`<div class="card up" style="text-align:center;padding:28px 16px">
+    <p style="font-size:12px;color:#888;letter-spacing:.08em;margin-bottom:12px">簿記2級 × 減価償却</p>
+    <h1>10万円のPCを買った。<br>全額、今年の経費にしていい？</h1>
+    <p class="body" style="margin:12px 0 20px">この疑問から、<strong style="color:#1a1a1a">減価償却の本質</strong>まで。ストーリー→仕訳→クイズで進みます。</p>
+    <button class="btn-w" onclick="go(1)">学習スタート →</button></div>`;return;}
   if(cur>=1&&cur<=5){
-    const s=stories[cur];
-    const lbl=cur===5?'仕訳を見る →':'次へ →';
-    let ex='';
-    if(s.ex==='grid')ex=`<div class="grid4">${[1,2,3,4].map(y=>`<div class="grid-item"><p style="font-size:11px;color:#888;margin-bottom:3px">${y}年目</p><p style="font-size:14px;font-weight:600;color:#BA7517">25,000円</p></div>`).join('')}</div>`;
-    c.innerHTML=`<div class="card slide-up">
-      <span class="badge ${s.bc}">${s.badge}</span>
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <div class="icon-box"><i class="ti ${s.icon}" style="font-size:24px;color:#888"></i></div>
-        <div style="flex:1">
-          <h2>${s.title}</h2>
-          <p>${s.body}</p>
-        </div>
+    const s=ST[cur];let ex='';
+    if(s.ex==='grid')ex=`<div class="grid4">${[1,2,3,4].map(y=>`<div class="gi" id="g${y}"><p style="font-size:11px;color:#888;margin-bottom:3px">${y}年目</p><p style="font-size:14px;font-weight:600;color:#BA7517">25,000円</p></div>`).join('')}</div>`;
+    c.innerHTML=`<div class="card up"><span class="badge ${s.bc}">${s.badge}</span>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="icon">${s.icon}</div>
+      <div style="flex:1"><h2>${s.title}</h2><p class="body">${s.body}</p></div>
+    </div>${ex}
+    <div style="overflow:hidden"><button class="btn-r" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div></div>`;
+    if(s.ex==='grid')setTimeout(()=>[1,2,3,4].forEach(i=>setTimeout(()=>{const e=document.getElementById('g'+i);if(e)e.classList.add('on');},i*120)),50);
+    return;}
+  if(cur===6){c.innerHTML=`<div class="card up">
+    <span class="badge bp">仕訳アニメーション</span>
+    <h2 style="margin-bottom:4px">減価償却の仕訳（年1回）</h2>
+    <p style="font-size:13px;color:#888;margin-bottom:14px">取得価額100,000円 ／ 耐用年数4年 ／ 定額法</p>
+    <div class="tbl"><div class="tbl-g">
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">借方（かりかた）</p>
+        <div class="ent" id="j1"><span style="font-weight:600">減価償却費</span><span style="color:#BA7517;font-weight:600">25,000</span></div>
       </div>
-      ${ex}
-      <div style="overflow:hidden"><button class="btn-next" onclick="go(${cur+1})">${lbl}</button></div>
-    </div>`;
-    return;
-  }
-  if(cur===6){
-    c.innerHTML=`<div class="card slide-up">
-      <span class="badge bp">仕訳アニメーション</span>
-      <h2 style="margin-bottom:4px">減価償却の仕訳（年1回）</h2>
-      <p style="font-size:13px;margin-bottom:16px">取得価額100,000円 ／ 耐用年数4年 ／ 定額法</p>
-      <div class="t-grid">
-        <div class="t-side" style="background:#fafafa">
-          <p style="font-size:11px;color:#888;text-align:center;margin-bottom:10px">借方（かりかた）</p>
-          <div class="jentry" id="j1" style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee">
-            <span style="font-size:15px;font-weight:600">減価償却費</span>
-            <span style="font-size:15px;font-weight:600;color:#BA7517">25,000</span>
-          </div>
-          <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5">P/Lに費用として計上</p>
-        </div>
-        <div class="t-div"></div>
-        <div class="t-side" style="background:#fafafa">
-          <p style="font-size:11px;color:#888;text-align:center;margin-bottom:10px">貸方（かしかた）</p>
-          <div class="jentry-r" id="j2" style="display:flex;justify-content:space-between;padding:10px 0;border-bottom:1px solid #eee">
-            <span style="font-size:15px;font-weight:600">減価償却累計額</span>
-            <span style="font-size:15px;font-weight:600;color:#1D9E75">25,000</span>
-          </div>
-          <p style="font-size:12px;color:#888;margin-top:8px;line-height:1.5">B/Sで固定資産から控除</p>
-        </div>
+      <div class="tbl-d"></div>
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">貸方（かしかた）</p>
+        <div class="ent" id="j2"><span style="font-weight:600">減価償却累計額</span><span style="color:#1D9E75;font-weight:600">25,000</span></div>
       </div>
-      <p style="font-size:13px;color:#888;margin-bottom:10px">4年間の帳簿価額の変化</p>
-      <div class="grid4">${[0,1,2,3].map(y=>`<div class="grid-item jentry-u" id="yr${y}"><p style="font-size:11px;color:#888;margin-bottom:3px">${y+1}年目末</p><p style="font-size:14px;font-weight:600">${(100000-(y+1)*25000).toLocaleString()}円</p></div>`).join('')}</div>
-      <div class="hint-box" style="margin-top:14px">
-        <p style="font-size:13px;line-height:1.6"><strong>間接法のポイント</strong>：「減価償却累計額」は貸方に記録。B/Sでは備品100,000－減価償却累計額25,000＝帳簿価額75,000のように表示。</p>
-      </div>
-      <div style="overflow:hidden"><button class="btn-next" onclick="go(7)">クイズへ →</button></div>
-    </div>`;
+    </div></div>
+    <p style="font-size:13px;color:#888;margin-bottom:8px">4年間の帳簿価額の変化</p>
+    <div class="grid4">${[0,1,2,3].map(y=>`<div class="gi" id="y${y}"><p style="font-size:11px;color:#888;margin-bottom:3px">${y+1}年目末</p><p style="font-size:14px;font-weight:600">${(100000-(y+1)*25000).toLocaleString()}円</p></div>`).join('')}</div>
+    <div class="hint" style="margin-top:14px"><p style="font-size:13px;line-height:1.6"><strong>間接法のポイント</strong>：「減価償却累計額」は貸方に記録。B/Sでは備品100,000－減価償却累計額25,000＝帳簿価額75,000のように表示。</p></div>
+    <div style="overflow:hidden"><button class="btn-r" onclick="go(7)">クイズへ →</button></div></div>`;
     setTimeout(()=>{
-      ['j1','j2'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('show');},i*500));
-      [0,1,2,3].forEach(i=>setTimeout(()=>{const e=document.getElementById('yr'+i);if(e)e.classList.add('show');},1200+i*300));
-    },150);
-    return;
-  }
+      setTimeout(()=>{const e=document.getElementById('j1');if(e)e.classList.add('on');},200);
+      setTimeout(()=>{const e=document.getElementById('j2');if(e)e.classList.add('on');},600);
+      [0,1,2,3].forEach(i=>setTimeout(()=>{const e=document.getElementById('y'+i);if(e)e.classList.add('on');},1000+i*200));
+    },50);return;}
   if(cur>=7&&cur<=9){
-    const qi=cur-7,q=quiz[qi];
-    let fb='';
-    if(answered){
-      const ok=chosen===q.ans;
-      fb=`<div class="feedback ${ok?'ok':'ng'}">
-        <p style="font-size:14px;font-weight:600;color:${ok?'#0F6E56':'#A32D2D'};margin-bottom:${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>
-        ${q.hint?`<p style="font-size:13px;color:#555;line-height:1.6"><i class="ti ti-bulb" style="font-size:14px;vertical-align:-1px;margin-right:4px"></i>${q.hint}</p>`:''}
-      </div>
-      <button class="btn-full" onclick="go(${cur+1})" style="margin-top:12px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;
-    }
-    c.innerHTML=`<div class="card slide-up">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
-        <span class="badge bp" style="margin:0">Q${qi+1}</span>
-        <span style="font-size:12px;color:#888">${qi+1}/3問</span>
-        <div class="prog-bar"><div class="prog-fill" style="width:${qi/3*100}%"></div></div>
-      </div>
-      <p style="font-size:16px;font-weight:600;line-height:1.6;margin-bottom:16px;color:#1a1a1a">${q.q}</p>
-      ${q.opts.map((o,i)=>{
-        let cls='opt';
-        if(answered){if(i===q.ans)cls+=' oc';else if(i===chosen)cls+=' ow';}
-        return`<button class="${cls}" onclick="answerQ(${qi},${i})" ${answered?'disabled':''}><span style="color:#aaa;margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
-      }).join('')}
-      ${fb}
-    </div>`;
-    return;
-  }
+    const qi=cur-7,q=QZ[qi];let fb='';
+    if(ok){const isOk=ch===q.ans;
+      fb=`<div class="fb ${isOk?'ok':'ng'}"><p style="font-size:14px;font-weight:600;color:${isOk?'#0F6E56':'#A32D2D'};margin-bottom:${q.hint?'6px':'0'}">${isOk?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>
+      ${q.hint?`<p style="font-size:13px;color:#555;line-height:1.6">💡 ${q.hint}</p>`:''}</div>
+      <button class="btn-w" onclick="go(${cur+1})" style="margin-top:10px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;}
+    c.innerHTML=`<div class="card up">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span class="badge bp" style="margin:0">Q${qi+1}</span>
+      <span style="font-size:12px;color:#888">${qi+1}/3問</span>
+      <div class="pb"><div class="pbf" style="width:${qi/3*100}%"></div></div></div>
+      <p style="font-size:16px;font-weight:600;line-height:1.6;margin-bottom:14px">${q.q}</p>
+      <div>${q.opts.map((o,i)=>{let cl='opt';if(ok){if(i===q.ans)cl+=' ok';else if(i===ch)cl+=' ng';}
+        return`<button class="${cl}" onclick="ans(${qi},${i})" ${ok?'disabled':''}><span style="color:#aaa;margin-right:8px">${['A','B','C','D'][i]}.</span>${o}</button>`;}).join('')}</div>${fb}</div>`;return;}
   if(cur===10){
-    const pct=Math.round(score/3*100);
-    const col=score===3?'#0F6E56':score===2?'#BA7517':'#A32D2D';
-    c.innerHTML=`<div class="card slide-up" style="text-align:center;padding:28px 20px">
-      <span class="badge ${score===3?'bt':'ba'}" style="margin-bottom:16px">${score===3?'完璧！':score===2?'あと少し！':'もう一回！'}</span>
-      <div class="result-score" style="color:${col}">${score}<span style="font-size:24px;color:#aaa">/3</span></div>
-      <p style="color:#888;margin-bottom:20px">${pct}% 正解</p>
-      <div class="summary">
-        <p style="font-size:13px;font-weight:600;margin-bottom:8px">今日の要点</p>
-        <ul>
-          <li>減価償却＝固定資産の取得価額を耐用年数で配分</li>
-          <li>目的＝費用収益対応の原則</li>
-          <li>仕訳 借方:減価償却費 ／ 貸方:減価償却累計額</li>
-          <li>定額法: 取得価額÷耐用年数</li>
-        </ul>
-      </div>
-      <button class="btn-full" onclick="restart()">最初からやり直す</button>
-    </div>`;
-    return;
-  }
+    const pct=Math.round(sc/3*100),col=sc===3?'#0F6E56':sc===2?'#BA7517':'#A32D2D';
+    c.innerHTML=`<div class="card up" style="text-align:center;padding:24px 16px">
+      <span class="badge ${sc===3?'bt':'ba'}" style="margin-bottom:14px">${sc===3?'完璧！':sc===2?'あと少し！':'もう一回！'}</span>
+      <div class="score" style="color:${col}">${sc}<span style="font-size:22px;color:#aaa">/3</span></div>
+      <p style="color:#888;margin-bottom:18px">${pct}% 正解</p>
+      <div class="sum"><p style="font-size:13px;font-weight:600;margin-bottom:8px">今日の要点</p><ul>
+        <li>減価償却＝固定資産の取得価額を耐用年数で配分</li><li>目的＝費用収益対応の原則</li>
+        <li>仕訳 借方:減価償却費 ／ 貸方:減価償却累計額</li><li>定額法: 取得価額÷耐用年数</li>
+      </ul></div>
+      <button class="btn-w" onclick="rst()">最初からやり直す</button></div>`;}
 }
-function go(n){cur=n;answered=false;chosen=-1;render();}
-function answerQ(qi,i){
-  if(answered)return;
-  answered=true;chosen=i;
-  if(i===quiz[qi].ans)score++;
-  render();
-}
-function restart(){cur=0;score=0;answered=false;chosen=-1;render();}
+function go(n){cur=n;ok=false;ch=-1;render();}
+function ans(qi,i){if(ok)return;ok=true;ch=i;if(i===QZ[qi].ans)sc++;render();}
+function rst(){cur=0;sc=0;ok=false;ch=-1;render();}
 render();
 </script>
 </body>

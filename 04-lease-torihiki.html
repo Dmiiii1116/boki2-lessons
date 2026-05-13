@@ -4,232 +4,158 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
 <title>リース取引 | 簿記2級</title>
-<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.19.0/dist/tabler-icons.min.css">
 <style>
 *{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
-body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;min-height:100vh;padding:16px}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:#f8f7f4;color:#1a1a1a;padding:16px;min-height:100vh}
 .app{max-width:600px;margin:0 auto}
 .pbar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
-.phase{font-size:12px;color:#888;min-width:60px}
+.plbl{font-size:12px;color:#888;min-width:60px}
 .dots{flex:1;display:flex;gap:3px}
-.dot{width:7px;height:7px;border-radius:50%;background:#ddd;transition:background .3s;flex-shrink:0}
+.dot{width:7px;height:7px;border-radius:50%;background:#ddd;flex-shrink:0;transition:background .3s}
 .dot.act{background:#BA7517}.dot.dn{background:#1D9E75}
 .slbl{font-size:12px;color:#888;min-width:36px;text-align:right}
-.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 4px rgba(0,0,0,.08)}
+.card{background:#fff;border-radius:16px;padding:20px;box-shadow:0 1px 3px rgba(0,0,0,.07)}
 .badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block;margin-bottom:12px}
 .ba{background:#FAEEDA;color:#854F0B}.bt{background:#E1F5EE;color:#0F6E56}.bp{background:#EEEDFE;color:#3C3489}.bb{background:#E6F1FB;color:#185FA5}
-.ibox{width:52px;height:52px;border-radius:14px;background:#f3f3f1;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.icon{width:48px;height:48px;border-radius:14px;background:#f3f3f1;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:22px}
 h1{font-size:20px;font-weight:700;line-height:1.5;margin-bottom:12px}
-h2{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px}
-p.body{font-size:15px;line-height:1.7;color:#555}
-button{font-size:15px;font-weight:600;padding:14px 24px;border-radius:12px;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#1a1a1a;min-height:48px;transition:background .15s,transform .1s;-webkit-appearance:none}
-button:active{transform:scale(.97)}
-.btn-next{margin-top:16px;float:right}
-.btn-full{width:100%;margin-top:12px}
-.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid #e5e5e5;background:#fafafa;color:#1a1a1a;min-height:52px;-webkit-appearance:none;line-height:1.5}
-.opt:disabled{cursor:default}
-.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
-.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
-.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin:12px 0}
-.cmp-card{border-radius:12px;padding:14px;border:1.5px solid}
-.tbl{border:1px solid #eee;border-radius:14px;overflow:hidden;margin:12px 0}
-.tbl-head{display:grid;grid-template-columns:1fr 1px 1fr}
-.tbl-side{padding:12px;background:#fafafa}
-.tbl-div{background:#eee}
-.entry{opacity:0;transform:translateX(-10px);transition:opacity .5s,transform .5s;display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
-.entry-r{opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s;display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px}
-.entry.show,.entry-r.show{opacity:1;transform:translateX(0)}
-.entry:last-child,.entry-r:last-child{border-bottom:none}
-.hint-box{background:#f0faf5;border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
-.feedback{padding:14px;border-radius:12px;margin-top:12px}
-.feedback.ok{background:#e6f9f0;border:1px solid #639922}
-.feedback.ng{background:#fef0f0;border:1px solid #A32D2D}
-.pbfill{height:4px;background:#eee;border-radius:2px;overflow:hidden;flex:1}
-.pbbar{height:100%;background:#BA7517;border-radius:2px;transition:width .3s}
-.rscore{font-size:56px;font-weight:700;text-align:center;padding:8px 0}
-.summary{background:#f8f7f4;border-radius:12px;padding:16px;margin:16px 0}
-.summary ul{padding-left:20px}
-.summary li{font-size:14px;line-height:2.2;color:#555}
-.jlabel{font-size:11px;color:#888;background:#f0f0f0;padding:4px 10px;border-radius:6px;display:inline-block;margin-bottom:10px}
-@keyframes su{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
-.su{animation:su .3s ease}
+h2{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px;color:#1a1a1a}
+.body{font-size:15px;line-height:1.7;color:#555}
+button{font-size:15px;font-weight:600;padding:14px 24px;border-radius:12px;cursor:pointer;border:1.5px solid #ddd;background:#fff;color:#1a1a1a;min-height:48px;-webkit-appearance:none;transition:opacity .15s}
+button:active{opacity:.7}
+.btn-r{float:right;margin-top:16px}
+.btn-w{width:100%;margin-top:12px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid #e5e5e5;background:#fafafa;color:#1a1a1a;min-height:52px;-webkit-appearance:none;line-height:1.5;transition:opacity .15s}
+.opt:active{opacity:.7}.opt:disabled{cursor:default}
+.opt.ok{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ng{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+.cmp{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:12px}
+.cc{border-radius:12px;padding:14px;border:1.5px solid}
+.tbl{border:1px solid #eee;border-radius:12px;overflow:hidden;margin:10px 0}
+.tbl-g{display:grid;grid-template-columns:1fr 1px 1fr}
+.tbl-s{padding:12px;background:#fafafa}
+.tbl-d{background:#eee}
+.ent{display:flex;justify-content:space-between;padding:8px 0;border-bottom:1px solid #f0f0f0;font-size:14px;opacity:0;transition:opacity .4s}
+.ent:last-child{border-bottom:none}
+.ent.on{opacity:1}
+.jlbl{font-size:11px;color:#888;background:#f0f0f0;padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px}
+.hint{background:#f0faf5;border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
+.fb{padding:14px;border-radius:12px;margin-top:12px}
+.fb.ok{background:#e6f9f0;border:1px solid #639922}
+.fb.ng{background:#fef0f0;border:1px solid #A32D2D}
+.pb{height:4px;background:#eee;border-radius:2px;overflow:hidden;flex:1}
+.pbf{height:100%;background:#BA7517;border-radius:2px;transition:width .3s}
+.score{font-size:56px;font-weight:700;text-align:center;padding:8px 0}
+.sum{background:#f8f7f4;border-radius:12px;padding:16px;margin:16px 0}
+.sum ul{padding-left:20px}.sum li{font-size:14px;line-height:2.2;color:#555}
+@keyframes up{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.up{animation:up .25s ease}
 </style>
 </head>
 <body>
 <div class="app">
   <div class="pbar">
-    <span class="phase" id="ph">イントロ</span>
+    <span class="plbl" id="ph">イントロ</span>
     <div class="dots" id="dots"></div>
     <span class="slbl" id="sl">1/11</span>
   </div>
-  <div id="content"></div>
+  <div id="ct"></div>
 </div>
 <script>
 const TOTAL=11;
-const phases=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
-const quiz=[
-  {q:'ファイナンスリースとして処理される条件の組み合わせは？',
-   opts:['解約可能 かつ 短期利用','解約不能 かつ フルペイアウト（コストの大半を負担）','月払い かつ 利息が発生する','リース会社が所有権を持つ'],
-   ans:1,hint:'ファイナンスリース＝解約不能＋フルペイアウト。この2条件を満たすと「実質的な購入」として資産計上する。'},
-  {q:'ファイナンスリース開始時の仕訳で正しいのは？',
-   opts:['支払リース料 XXX ／ 現金 XXX（費用計上）','リース資産 XXX ／ リース債務 XXX（資産計上）','現金 XXX ／ リース収入 XXX','リース債務 XXX ／ リース資産 XXX'],
-   ans:1,hint:'ファイナンスリースは「購入と同じ」扱い。開始時にリース資産（資産）とリース債務（負債）を同額で計上する。'},
-  {q:'【引っ掛け】オペレーティングリースの会計処理は？',
-   opts:['リース資産・リース債務を計上する','リース料支払時に費用計上するだけ','毎期、リース資産の減価償却費を計上する','リース債務のみ計上する'],
-   ans:1,hint:'オペレーティングリース＝ただのレンタル。資産計上は不要。支払ったときに「支払リース料（費用）」として計上するだけ。'}
+const PH=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
+const ST=[null,
+  {badge:'STEP 1',bc:'ba',icon:'🏪',title:'「買わずに借りて使う」＝ リース',body:'会社が印刷機を購入せず、リース会社から毎月払いで使う。「ただのレンタル」に見えるが、簿記では2種類の扱いがある。',ex:null},
+  {badge:'STEP 2',bc:'ba',icon:'🔀',title:'2種類のリース：どこが違う？',body:'ファイナンスリースは「解約不能＋フルペイアウト」。実質的に購入と同じ。オペレーティングリースはそれ以外の普通のレンタル。',ex:'cmp'},
+  {badge:'STEP 3',bc:'bt',icon:'🏠',title:'ファイナンスリース＝「買ったのと同じ」扱い',body:'解約できず、コストもほぼ全額負担するなら、経済的には「買った」のと変わらない。だから資産計上する。見た目より経済的な実態を優先するのが会計の考え方。',ex:null},
+  {badge:'STEP 4',bc:'bt',icon:'💰',title:'毎月の支払い ＝ 元本返済 ＋ 利息',body:'銀行ローンと同じ構造。年間リース料75,000円は元本60,000円＋利息15,000円に分解される。元本でリース債務を減らし、利息は支払利息として費用計上。',ex:null},
+  {badge:'STEP 5',bc:'bb',icon:'🚩',title:'試験のポイント：所有権移転か移転外か',body:'ファイナンスリースには「所有権移転」と「所有権移転外」の2種類。減価償却の耐用年数がリース期間か資産本来の年数かで変わる。問題文をよく読もう。',ex:null},
 ];
-const stories=[null,
-  {badge:'STEP 1',bc:'ba',icon:'ti-building-store',
-   title:'「買わずに借りて使う」= リース',
-   body:'会社が印刷機を購入せず、リース会社から毎月払いで使う。「ただのレンタル」に見えるが、簿記では2種類の扱いがある。',ex:null},
-  {badge:'STEP 2',bc:'ba',icon:'ti-git-branch',
-   title:'2種類のリース：どこが違う？',
-   body:'ファイナンスリースは「解約不能 ＋ フルペイアウト」。実質的に購入と同じ。オペレーティングリースはそれ以外の普通のレンタル。',ex:'cmp'},
-  {badge:'STEP 3',bc:'bt',icon:'ti-home-dollar',
-   title:'ファイナンスリース＝「買ったのと同じ」扱い',
-   body:'解約できず、コストもほぼ全額負担するなら、経済的には「買った」のと変わらない。だから資産計上する。「見た目の形式」より「経済的な実態」を優先するのが会計の考え方。',ex:null},
-  {badge:'STEP 4',bc:'bt',icon:'ti-coin',
-   title:'毎月の支払い ＝ 元本返済 ＋ 利息',
-   body:'銀行ローンと同じ構造。毎年のリース料（75,000円）は元本（60,000円）＋利息（15,000円）に分解される。元本はリース債務を減らし、利息は支払利息として費用計上。',ex:null},
-  {badge:'STEP 5',bc:'bb',icon:'ti-flag',
-   title:'試験のポイント：所有権移転か移転外か',
-   body:'ファイナンスリースには「所有権移転」と「所有権移転外」の2種類。減価償却の耐用年数がリース期間か資産本来の年数かで変わる。問題文をよく読もう。',ex:null},
+const QZ=[
+  {q:'ファイナンスリースとして処理される条件の組み合わせは？',opts:['解約可能 かつ 短期利用','解約不能 かつ フルペイアウト（コストの大半を負担）','月払い かつ 利息が発生する','リース会社が所有権を持つ'],ans:1,hint:'ファイナンスリース＝解約不能＋フルペイアウト。この2条件を満たすと「実質的な購入」として資産計上する。'},
+  {q:'ファイナンスリース開始時の仕訳で正しいのは？',opts:['支払リース料 XXX ／ 現金 XXX（費用計上）','リース資産 XXX ／ リース債務 XXX（資産計上）','現金 XXX ／ リース収入 XXX','リース債務 XXX ／ リース資産 XXX'],ans:1,hint:'ファイナンスリースは「購入と同じ」扱い。開始時にリース資産（資産）とリース債務（負債）を同額で計上する。'},
+  {q:'【引っ掛け】オペレーティングリースの会計処理は？',opts:['リース資産・リース債務を計上する','リース料支払時に費用計上するだけ','毎期、リース資産の減価償却費を計上する','リース債務のみ計上する'],ans:1,hint:'オペレーティングリース＝ただのレンタル。資産計上不要。支払時に「支払リース料（費用）」として計上するだけ。'}
 ];
-let cur=0,score=0,ans=false,chosen=-1;
-function mkDots(){
-  const d=document.getElementById('dots');d.innerHTML='';
-  for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}
-}
+let cur=0,sc=0,ok=false,ch=-1;
+function dots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}}
 function render(){
-  document.getElementById('ph').textContent=phases[cur];
+  document.getElementById('ph').textContent=PH[cur];
   document.getElementById('sl').textContent=(cur+1)+'/'+TOTAL;
-  mkDots();
-  const c=document.getElementById('content');
-  if(cur===0){
-    c.innerHTML=`<div class="card su" style="text-align:center;padding:32px 20px">
-      <p style="font-size:12px;color:#888;letter-spacing:.08em;margin-bottom:12px">簿記2級 × リース取引</p>
-      <h1>「買わずに借りる」のに<br>なぜ資産計上するの？</h1>
-      <p class="body" style="margin:12px 0 24px">ファイナンスリースとオペレーティングリースの違いから、<strong style="color:#1a1a1a">仕訳の本質</strong>まで理解しよう。</p>
-      <button class="btn-full" onclick="go(1)">学習スタート →</button>
-    </div>`;return;
-  }
+  dots();const c=document.getElementById('ct');
+  if(cur===0){c.innerHTML=`<div class="card up" style="text-align:center;padding:28px 16px">
+    <p style="font-size:12px;color:#888;letter-spacing:.08em;margin-bottom:12px">簿記2級 × リース取引</p>
+    <h1>「買わずに借りる」のに<br>なぜ資産計上するの？</h1>
+    <p class="body" style="margin:12px 0 20px">ファイナンスリースとオペレーティングリースの違いから、<strong style="color:#1a1a1a">仕訳の本質</strong>まで理解しよう。</p>
+    <button class="btn-w" onclick="go(1)">学習スタート →</button></div>`;return;}
   if(cur>=1&&cur<=5){
-    const s=stories[cur];
-    let ex='';
+    const s=ST[cur];let ex='';
     if(s.ex==='cmp')ex=`<div class="cmp">
-      <div class="cmp-card" style="background:#FFF8F0;border-color:#E8C47A">
-        <p style="font-size:12px;font-weight:700;color:#854F0B;margin-bottom:8px">ファイナンスリース</p>
-        <p style="font-size:13px;color:#555;line-height:1.6">✗ 解約不能<br>✗ フルペイアウト<br>→ 資産計上が必要</p>
+      <div class="cc" style="background:#FFF8F0;border-color:#E8C47A"><p style="font-size:12px;font-weight:700;color:#854F0B;margin-bottom:8px">ファイナンスリース</p><p style="font-size:13px;color:#555;line-height:1.6">✗ 解約不能<br>✗ フルペイアウト<br>→ 資産計上が必要</p></div>
+      <div class="cc" style="background:#F0F8FF;border-color:#7AB4E8"><p style="font-size:12px;font-weight:700;color:#185FA5;margin-bottom:8px">オペレーティングリース</p><p style="font-size:13px;color:#555;line-height:1.6">○ 解約可能<br>○ 普通のレンタル<br>→ 費用計上のみ</p></div></div>`;
+    c.innerHTML=`<div class="card up"><span class="badge ${s.bc}">${s.badge}</span>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="icon">${s.icon}</div>
+      <div style="flex:1"><h2>${s.title}</h2><p class="body">${s.body}</p></div>
+    </div>${ex}
+    <div style="overflow:hidden"><button class="btn-r" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div></div>`;return;}
+  if(cur===6){c.innerHTML=`<div class="card up">
+    <span class="badge bp">仕訳アニメーション</span>
+    <h2 style="margin-bottom:4px">ファイナンスリースの仕訳</h2>
+    <p style="font-size:13px;color:#888;margin-bottom:12px">リース資産：300,000円 ／ 年間リース料：75,000円（元本60,000＋利息15,000）</p>
+    <span class="jlbl">① リース開始時</span>
+    <div class="tbl"><div class="tbl-g">
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">借方</p>
+        <div class="ent" id="j1"><span style="font-weight:600">リース資産</span><span style="color:#BA7517;font-weight:600">300,000</span></div>
       </div>
-      <div class="cmp-card" style="background:#F0F8FF;border-color:#7AB4E8">
-        <p style="font-size:12px;font-weight:700;color:#185FA5;margin-bottom:8px">オペレーティングリース</p>
-        <p style="font-size:13px;color:#555;line-height:1.6">○ 解約可能<br>○ 普通のレンタル<br>→ 費用計上のみ</p>
+      <div class="tbl-d"></div>
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">貸方</p>
+        <div class="ent" id="j2"><span style="font-weight:600">リース債務</span><span style="color:#1D9E75;font-weight:600">300,000</span></div>
       </div>
-    </div>`;
-    c.innerHTML=`<div class="card su">
-      <span class="badge ${s.bc}">${s.badge}</span>
-      <div style="display:flex;gap:14px;align-items:flex-start">
-        <div class="ibox"><i class="ti ${s.icon}" style="font-size:24px;color:#888"></i></div>
-        <div style="flex:1"><h2>${s.title}</h2><p class="body">${s.body}</p></div>
+    </div></div>
+    <span class="jlbl">② 毎年のリース料支払時</span>
+    <div class="tbl"><div class="tbl-g">
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">借方</p>
+        <div class="ent" id="j3"><span style="font-weight:600">リース債務</span><span style="color:#BA7517;font-weight:600">60,000</span></div>
+        <div class="ent" id="j4"><span style="font-weight:600">支払利息</span><span style="color:#BA7517;font-weight:600">15,000</span></div>
       </div>
-      ${ex}
-      <div style="overflow:hidden"><button class="btn-next" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div>
-    </div>`;return;
-  }
-  if(cur===6){
-    c.innerHTML=`<div class="card su">
-      <span class="badge bp">仕訳アニメーション</span>
-      <h2 style="margin-bottom:4px">ファイナンスリースの仕訳</h2>
-      <p style="font-size:13px;color:#888;margin-bottom:14px">リース資産：300,000円 ／ 年間リース料：75,000円（元本60,000＋利息15,000）</p>
-
-      <span class="jlabel">① リース開始時</span>
-      <div class="tbl">
-        <div class="tbl-head">
-          <div class="tbl-side">
-            <p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">借方</p>
-            <div class="entry" id="e1"><span style="font-weight:600">リース資産</span><span style="color:#BA7517;font-weight:600">300,000</span></div>
-          </div>
-          <div class="tbl-div"></div>
-          <div class="tbl-side">
-            <p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">貸方</p>
-            <div class="entry-r" id="e2"><span style="font-weight:600">リース債務</span><span style="color:#1D9E75;font-weight:600">300,000</span></div>
-          </div>
-        </div>
+      <div class="tbl-d"></div>
+      <div class="tbl-s"><p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">貸方</p>
+        <div class="ent" id="j5"><span style="font-weight:600">現金</span><span style="color:#1D9E75;font-weight:600">75,000</span></div>
       </div>
-
-      <span class="jlabel" style="margin-top:14px;display:inline-block">② 毎年のリース料支払時</span>
-      <div class="tbl">
-        <div class="tbl-head">
-          <div class="tbl-side">
-            <p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">借方</p>
-            <div class="entry" id="e3"><span style="font-weight:600">リース債務</span><span style="color:#BA7517;font-weight:600">60,000</span></div>
-            <div class="entry" id="e4"><span style="font-weight:600">支払利息</span><span style="color:#BA7517;font-weight:600">15,000</span></div>
-          </div>
-          <div class="tbl-div"></div>
-          <div class="tbl-side">
-            <p style="font-size:11px;color:#888;text-align:center;margin-bottom:8px">貸方</p>
-            <div class="entry-r" id="e5"><span style="font-weight:600">現金</span><span style="color:#1D9E75;font-weight:600">75,000</span></div>
-          </div>
-        </div>
-      </div>
-
-      <div class="hint-box">
-        <p style="font-size:13px;line-height:1.6;font-weight:600;margin-bottom:4px">ポイント</p>
-        <p style="font-size:13px;line-height:1.6;color:#555">開始時は「リース資産＝リース債務」で同額計上。毎年の支払では元本部分でリース債務を減らし、利息は費用計上。オペレーティングリースは全額「支払リース料（費用）」で処理するだけ。</p>
-      </div>
-      <div style="overflow:hidden"><button class="btn-next" onclick="go(7)">クイズへ →</button></div>
-    </div>`;
+    </div></div>
+    <div class="hint"><p style="font-size:13px;line-height:1.6">開始時は「リース資産＝リース債務」で同額計上。毎年の支払では元本部分でリース債務を減らし、利息は費用計上。オペレーティングリースは全額「支払リース料（費用）」で処理するだけ。</p></div>
+    <div style="overflow:hidden"><button class="btn-r" onclick="go(7)">クイズへ →</button></div></div>`;
     setTimeout(()=>{
-      ['e1'].forEach(id=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('show');},200));
-      ['e2'].forEach(id=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('show');},600));
-      ['e3','e4'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('show');},1100+i*300));
-      ['e5'].forEach(id=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('show');},1800));
-    },150);return;
-  }
+      [['j1',200],['j2',600],['j3',1100],['j4',1400],['j5',1700]].forEach(([id,t])=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('on');},t));
+    },50);return;}
   if(cur>=7&&cur<=9){
-    const qi=cur-7,q=quiz[qi];
-    let fb='';
-    if(ans){
-      const ok=chosen===q.ans;
-      fb=`<div class="feedback ${ok?'ok':'ng'}">
-        <p style="font-size:14px;font-weight:600;color:${ok?'#0F6E56':'#A32D2D'};margin-bottom:${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>
-        ${q.hint?`<p style="font-size:13px;color:#555;line-height:1.6"><i class="ti ti-bulb" style="font-size:14px;vertical-align:-1px;margin-right:4px"></i>${q.hint}</p>`:''}
-      </div>
-      <button class="btn-full" onclick="go(${cur+1})" style="margin-top:12px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;
-    }
-    c.innerHTML=`<div class="card su">
-      <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
-        <span class="badge bp" style="margin:0">Q${qi+1}</span>
-        <span style="font-size:12px;color:#888">${qi+1}/3問</span>
-        <div class="pbfill"><div class="pbbar" style="width:${qi/3*100}%"></div></div>
-      </div>
-      <p style="font-size:16px;font-weight:600;line-height:1.6;margin-bottom:16px">${q.q}</p>
-      ${q.opts.map((o,i)=>{let cl='opt';if(ans){if(i===q.ans)cl+=' oc';else if(i===chosen)cl+=' ow';}
-        return`<button class="${cl}" onclick="doAns(${qi},${i})" ${ans?'disabled':''}><span style="color:#aaa;margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
-      }).join('')}
-      ${fb}
-    </div>`;return;
-  }
+    const qi=cur-7,q=QZ[qi];let fb='';
+    if(ok){const isOk=ch===q.ans;
+      fb=`<div class="fb ${isOk?'ok':'ng'}"><p style="font-size:14px;font-weight:600;color:${isOk?'#0F6E56':'#A32D2D'};margin-bottom:${q.hint?'6px':'0'}">${isOk?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>
+      ${q.hint?`<p style="font-size:13px;color:#555;line-height:1.6">💡 ${q.hint}</p>`:''}</div>
+      <button class="btn-w" onclick="go(${cur+1})" style="margin-top:10px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;}
+    c.innerHTML=`<div class="card up">
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:14px"><span class="badge bp" style="margin:0">Q${qi+1}</span>
+      <span style="font-size:12px;color:#888">${qi+1}/3問</span>
+      <div class="pb"><div class="pbf" style="width:${qi/3*100}%"></div></div></div>
+      <p style="font-size:16px;font-weight:600;line-height:1.6;margin-bottom:14px">${q.q}</p>
+      <div>${q.opts.map((o,i)=>{let cl='opt';if(ok){if(i===q.ans)cl+=' ok';else if(i===ch)cl+=' ng';}
+        return`<button class="${cl}" onclick="ans(${qi},${i})" ${ok?'disabled':''}><span style="color:#aaa;margin-right:8px">${['A','B','C','D'][i]}.</span>${o}</button>`;}).join('')}</div>${fb}</div>`;return;}
   if(cur===10){
-    const pct=Math.round(score/3*100);
-    const col=score===3?'#0F6E56':score===2?'#BA7517':'#A32D2D';
-    c.innerHTML=`<div class="card su" style="text-align:center;padding:28px 20px">
-      <span class="badge ${score===3?'bt':'ba'}" style="margin-bottom:16px">${score===3?'完璧！':score===2?'あと少し！':'もう一回！'}</span>
-      <div class="rscore" style="color:${col}">${score}<span style="font-size:24px;color:#aaa">/3</span></div>
-      <p style="color:#888;margin-bottom:20px">${pct}% 正解</p>
-      <div class="summary"><p style="font-size:13px;font-weight:600;margin-bottom:8px">今日の要点</p><ul>
-        <li>ファイナンスリース＝解約不能＋フルペイアウト</li>
-        <li>開始時：リース資産 ／ リース債務（同額）</li>
-        <li>支払時：リース債務＋支払利息 ／ 現金</li>
-        <li>オペレーティングリース＝支払リース料（費用）のみ</li>
+    const pct=Math.round(sc/3*100),col=sc===3?'#0F6E56':sc===2?'#BA7517':'#A32D2D';
+    c.innerHTML=`<div class="card up" style="text-align:center;padding:24px 16px">
+      <span class="badge ${sc===3?'bt':'ba'}" style="margin-bottom:14px">${sc===3?'完璧！':sc===2?'あと少し！':'もう一回！'}</span>
+      <div class="score" style="color:${col}">${sc}<span style="font-size:22px;color:#aaa">/3</span></div>
+      <p style="color:#888;margin-bottom:18px">${pct}% 正解</p>
+      <div class="sum"><p style="font-size:13px;font-weight:600;margin-bottom:8px">今日の要点</p><ul>
+        <li>ファイナンスリース＝解約不能＋フルペイアウト</li><li>開始時：リース資産 ／ リース債務（同額）</li>
+        <li>支払時：リース債務＋支払利息 ／ 現金</li><li>オペレーティングリース＝支払リース料（費用）のみ</li>
       </ul></div>
-      <button class="btn-full" onclick="restart()">最初からやり直す</button>
-    </div>`;
-  }
+      <button class="btn-w" onclick="rst()">最初からやり直す</button></div>`;}
 }
-function go(n){cur=n;ans=false;chosen=-1;render();}
-function doAns(qi,i){if(ans)return;ans=true;chosen=i;if(i===quiz[qi].ans)score++;render();}
-function restart(){cur=0;score=0;ans=false;chosen=-1;render();}
+function go(n){cur=n;ok=false;ch=-1;render();}
+function ans(qi,i){if(ok)return;ok=true;ch=i;if(i===QZ[qi].ans)sc++;render();}
+function rst(){cur=0;sc=0;ok=false;ch=-1;render();}
 render();
 </script>
 </body>
