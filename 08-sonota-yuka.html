@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>その他有価証券 | 簿記2級</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#888;--border:#e5e5e5;--amber:#BA7517;--green:#1D9E75;--red:#A32D2D;--amber-bg:#FAEEDA;--green-bg:#E1F5EE;--purple-bg:#EEEDFE;--blue-bg:#E6F1FB;--red-bg:#FAEBEB;}
+@media(prefers-color-scheme:dark){:root{--bg:#111;--card:#1e1e1e;--text:#f0ede6;--sub:#999;--border:#333;--amber-bg:#412402;--green-bg:#04342C;--purple-bg:#26215C;--blue-bg:#042C53;--red-bg:#3D0A0A;}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px}
+.app{max-width:600px;margin:0 auto}
+.pbar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.phase{font-size:12px;color:var(--sub);min-width:68px}.dots{flex:1;display:flex;gap:3px}.slbl{font-size:12px;color:var(--sub);min-width:36px;text-align:right}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .3s;flex-shrink:0}.dot.act{background:var(--amber)}.dot.dn{background:var(--green)}
+.card{background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--border)}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block;margin-bottom:12px}
+.ba{background:var(--amber-bg);color:#854F0B}.bt{background:var(--green-bg);color:#0F6E56}.bp{background:var(--purple-bg);color:#3C3489}.bb{background:var(--blue-bg);color:#185FA5}
+.ibox{width:52px;height:52px;border-radius:14px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+button{font-family:inherit;font-size:15px;font-weight:600;padding:13px 20px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text);min-height:48px;-webkit-appearance:none}
+button:active{opacity:.8}.btn-next{float:right;margin-top:16px}.btn-full{width:100%;margin-top:12px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--text);min-height:52px;-webkit-appearance:none;line-height:1.5;font-family:inherit}
+.opt:disabled{cursor:default}
+.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+@media(prefers-color-scheme:dark){.opt.oc{background:#173404!important;border-color:#3B6D11!important;color:#C0DD97!important}.opt.ow{background:#501313!important;border-color:#A32D2D!important;color:#F7C1C1!important}}
+.tbl{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:10px 0}
+.tside{padding:12px;background:var(--bg)}.tdiv{background:var(--border);width:1px}
+.jl{opacity:0;transform:translateX(-10px);transition:opacity .5s,transform .5s}
+.jr{opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s}
+.jl.sh,.jr.sh{opacity:1;transform:translateX(0)}
+.jlbl{font-size:11px;color:var(--sub);background:var(--bg);padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;border:1px solid var(--border)}
+.entry{display:flex;justify-content:space-between;padding:8px 0;font-size:14px}.entry+.entry{border-top:1px solid var(--border)}
+.hint-box{background:var(--green-bg);border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
+@media(prefers-color-scheme:dark){.hint-box{background:var(--green-bg);border-color:#1D5040}}
+.feedback{padding:14px;border-radius:12px;margin-top:12px;border:1.5px solid}
+.feedback.ok{background:#E1F5EE;border-color:#639922}.feedback.ng{background:#FCEBEB;border-color:#A32D2D}
+@media(prefers-color-scheme:dark){.feedback.ok{background:#04342C;border-color:#3B6D11}.feedback.ng{background:#501313;border-color:#A32D2D}}
+.pbfill{height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex:1}.pbbar{height:100%;background:var(--amber);border-radius:2px}
+.diff-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:13px}
+.diff-table th{background:var(--bg);padding:8px;border:1px solid var(--border);font-weight:600;text-align:center}
+.diff-table td{padding:8px;border:1px solid var(--border);text-align:center;color:var(--sub)}
+.diff-table td.hl{color:var(--text);font-weight:600}
+@keyframes su{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.su{animation:su .3s ease}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="pbar"><span class="phase" id="ph">イントロ</span><div class="dots" id="dots"></div><span class="slbl" id="sl">1/11</span></div>
+  <div id="content"></div>
+</div>
+<script>
+const TOTAL=11;
+const phases=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
+const stories=[null,
+  {badge:'STEP 1',bc:'ba',icon:'📁',title:'「売買目的でも満期保有でもない株」',
+   body:'取引先との関係強化で持ち続けている株式。売ろうとは思っていないが、売買目的有価証券でも満期保有目的でもない。これが「その他有価証券」。',ex:null},
+  {badge:'STEP 2',bc:'ba',icon:'🤔',title:'期末に時価評価するが…P/Lには載せない',
+   body:'その他有価証券も期末に時価評価する（時価法）。ただし、評価差額はP/L（損益）には計上しない。なぜ？まだ売っていないのに利益を確定させるのはおかしい。',ex:null},
+  {badge:'STEP 3',bc:'bt',icon:'🏦',title:'評価差額は「純資産」へ直接計上',
+   body:'評価差額は「その他有価証券評価差額金」として貸借対照表の純資産の部に計上する。これをOCI（その他包括利益）という。P/Lには影響しない。',ex:'diff'},
+  {badge:'STEP 4',bc:'bt',icon:'🔄',title:'翌期首に「洗替処理」を行う',
+   body:'毎期末に新たに時価評価するため、翌期首に前期末の評価仕訳を逆仕訳して取得原価に戻す（洗替法）。これが翌期の比較を正しくするための処理。',ex:null},
+  {badge:'STEP 5',bc:'bb',icon:'⚡',title:'売買目的との違いを整理する',
+   body:'売買目的有価証券：評価差額→P/L（営業外損益）。その他有価証券：評価差額→純資産（評価差額金）。どちらも時価評価だが、計上先が全然違う！',ex:null},
+];
+const quiz=[
+  {q:'その他有価証券の評価差額はどこに計上する？',
+   opts:['P/L（損益計算書）の営業外収益','P/Lの特別利益','B/S（貸借対照表）純資産の部（評価差額金）','B/Sの負債の部'],
+   ans:2,hint:'その他有価証券の評価差額はP/Lに載せない。「その他有価証券評価差額金」として純資産に計上（OCI）。'},
+  {q:'取得原価200,000円のその他有価証券が期末215,000円に。仕訳の貸方は？',
+   opts:['有価証券評価益 15,000円','その他有価証券評価差額金 15,000円','繰越利益剰余金 15,000円','未実現利益 15,000円'],
+   ans:1,hint:'その他有価証券 15,000 ／ その他有価証券評価差額金 15,000。評価差額金は純資産の部に計上される。'},
+  {q:'【引っ掛け】その他有価証券の「洗替処理」とは何か？',
+   opts:['時価をそのまま翌期に繰り越す','前期末の評価仕訳を逆仕訳して取得原価に戻す','評価差額を当期の利益に振り替える','追加購入して平均単価を下げる'],
+   ans:1,hint:'洗替法：翌期首に前期末の評価仕訳を逆仕訳して取得原価に戻す。翌期末にまた新たに時価評価する。'},
+];
+let cur=0,score=0,answered=false,chosen=-1;
+function mkDots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}}
+function render(){
+  document.getElementById('ph').textContent=phases[cur];
+  document.getElementById('sl').textContent=(cur+1)+'/'+TOTAL;
+  mkDots();const c=document.getElementById('content');
+  if(cur===0){c.innerHTML=`<div class="card su" style="text-align:center;padding:32px 20px">
+    <p style="font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 12px">簿記2級 × 有価証券</p>
+    <h1 style="font-size:21px;font-weight:700;line-height:1.6;margin:0 0 12px">長期保有の株が値上がり。<br>でも評価益はP/Lに載せない？</h1>
+    <p style="font-size:15px;color:var(--sub);line-height:1.7;margin:0 0 24px">売買目的との違いから<strong style="color:var(--text)">純資産直入法の本質</strong>まで。</p>
+    <button class="btn-full" onclick="go(1)">学習スタート →</button>
+  </div>`;return;}
+  if(cur>=1&&cur<=5){
+    const s=stories[cur];let ex='';
+    if(s.ex==='diff')ex=`<table class="diff-table">
+      <tr><th>項目</th><th>売買目的</th><th>その他</th></tr>
+      <tr><td>評価方法</td><td>時価法</td><td>時価法</td></tr>
+      <tr><td>差額の計上先</td><td class="hl" style="color:#BA7517">P/L（損益）</td><td class="hl" style="color:#0F6E56">純資産</td></tr>
+      <tr><td>翌期首の処理</td><td>不要</td><td class="hl">洗替処理が必要</td></tr>
+    </table>`;
+    c.innerHTML=`<div class="card su"><span class="badge ${s.bc}">${s.badge}</span>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="ibox">${s.icon}</div>
+      <div style="flex:1"><h2 style="font-size:17px;font-weight:700;margin:0 0 8px">${s.title}</h2><p style="font-size:15px;color:var(--sub);line-height:1.7">${s.body}</p></div>
+    </div>${ex}
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div></div>`;return;
+  }
+  if(cur===6){
+    c.innerHTML=`<div class="card su"><span class="badge bp">仕訳アニメーション</span>
+    <h2 style="font-size:17px;font-weight:700;margin:0 0 4px">その他有価証券の評価仕訳</h2>
+    <p style="font-size:13px;color:var(--sub);margin:0 0 14px">取得原価200,000円 → 期末時価215,000円（差額15,000円）</p>
+
+    <span class="jlbl">① 期末評価（時価に引き上げ）</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j1"><span style="font-weight:600">その他有価証券</span><span style="color:var(--amber);font-weight:600">15,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j2"><span style="font-weight:600">その他有価証券評価差額金</span><span style="color:var(--green);font-weight:600">15,000</span></div></div>
+    </div></div>
+    <p style="font-size:12px;color:#0F6E56;margin:4px 0 14px">→ 評価差額金は純資産の部に計上（P/Lには影響なし）</p>
+
+    <span class="jlbl" style="display:inline-block">② 翌期首（洗替処理で取得原価に戻す）</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j3"><span style="font-weight:600">その他有価証券評価差額金</span><span style="color:var(--amber);font-weight:600">15,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j4"><span style="font-weight:600">その他有価証券</span><span style="color:var(--green);font-weight:600">15,000</span></div></div>
+    </div></div>
+
+    <div class="hint-box"><p style="font-size:13px;font-weight:700;margin:0 0 6px;color:#0F6E56">ポイント</p>
+    <p style="font-size:13px;color:var(--sub);line-height:1.6">評価差額金は<strong style="color:var(--text)">純資産</strong>。P/Lには載らない。洗替処理で毎期末にリセットして新たに評価する。</p></div>
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(7)">クイズへ →</button></div></div>`;
+    setTimeout(()=>{
+      ['j1','j2'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},i*400));
+      ['j3','j4'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},1000+i*400));
+    },150);return;
+  }
+  if(cur>=7&&cur<=9){
+    const qi=cur-7,q=quiz[qi];let fb='';
+    if(answered){const ok=chosen===q.ans;
+      fb=`<div class="feedback ${ok?'ok':'ng'}"><p style="font-size:14px;font-weight:700;color:${ok?'#0F6E56':'#A32D2D'};margin:0 0 ${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>${q.hint?`<p style="font-size:13px;color:var(--sub);line-height:1.6;margin:0">💡 ${q.hint}</p>`:''}</div>
+      <button class="btn-full" onclick="go(${cur+1})" style="margin-top:12px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;}
+    c.innerHTML=`<div class="card su">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><span class="badge bp" style="margin:0">Q${qi+1}</span><span style="font-size:12px;color:var(--sub)">${qi+1}/3問</span><div class="pbfill"><div class="pbbar" style="width:${qi/3*100}%"></div></div></div>
+    <p style="font-size:16px;font-weight:600;line-height:1.6;margin:0 0 16px">${q.q}</p>
+    <div>${q.opts.map((o,i)=>{let cl='opt';if(answered){if(i===q.ans)cl+=' oc';else if(i===chosen)cl+=' ow';}
+      return`<button class="${cl}" onclick="doAns(${qi},${i})" ${answered?'disabled':''}><span style="color:var(--sub);margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
+    }).join('')}</div>${fb}</div>`;return;
+  }
+  if(cur===10){
+    const pct=Math.round(score/3*100);const col=score===3?'#1D9E75':score===2?'#BA7517':'#A32D2D';
+    c.innerHTML=`<div class="card su" style="text-align:center;padding:28px 20px">
+    <span class="badge ${score===3?'bt':'ba'}" style="margin-bottom:16px">${score===3?'完璧！':score===2?'あと少し！':'もう一回！'}</span>
+    <div style="font-size:54px;font-weight:700;color:${col};margin:8px 0">${score}<span style="font-size:22px;color:var(--sub)">/3</span></div>
+    <p style="color:var(--sub);margin:0 0 20px">${pct}% 正解</p>
+    <div style="text-align:left;background:var(--bg);border-radius:12px;padding:16px;border:1px solid var(--border);margin-bottom:20px">
+      <p style="font-size:13px;font-weight:700;margin:0 0 10px">今日の要点</p>
+      <ul style="padding-left:20px;color:var(--sub);font-size:14px;line-height:2.2">
+        <li>その他有価証券も期末に時価評価（時価法）</li>
+        <li>評価差額は<strong style="color:var(--text)">純資産</strong>（その他有価証券評価差額金）</li>
+        <li>P/Lには影響しない（OCIの考え方）</li>
+        <li>翌期首に洗替処理（逆仕訳で取得原価に戻す）</li>
+      </ul>
+    </div>
+    <button class="btn-full" onclick="restart()">最初からやり直す</button></div>`;
+  }
+}
+function go(n){cur=n;answered=false;chosen=-1;render();}
+function doAns(qi,i){if(answered)return;answered=true;chosen=i;if(i===quiz[qi].ans)score++;render();}
+function restart(){cur=0;score=0;answered=false;chosen=-1;render();}
+render();
+</script>
+</body>
+</html>
