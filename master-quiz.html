@@ -1,0 +1,401 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>簿記2級 マスター問題集</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{
+  --bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#888;--border:#e5e5e5;
+  --amber:#BA7517;--green:#1D9E75;--red:#A32D2D;
+  --card-shadow:0 1px 4px rgba(0,0,0,.08);
+  --amber-bg:#FAEEDA;--green-bg:#E1F5EE;--purple-bg:#EEEDFE;--red-bg:#FCEBEB;
+}
+@media(prefers-color-scheme:dark){:root{
+  --bg:#111;--card:#1e1e1e;--text:#f0ede6;--sub:#999;--border:#333;
+  --card-shadow:none;
+  --amber-bg:#412402;--green-bg:#04342C;--purple-bg:#26215C;--red-bg:#501313;
+}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Hiragino Kaku Gothic ProN','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px}
+.app{max-width:600px;margin:0 auto}
+.card{background:var(--card);border-radius:16px;padding:20px;box-shadow:var(--card-shadow);border:1px solid var(--border)}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block}
+.ba{background:var(--amber-bg);color:#854F0B}.bt{background:var(--green-bg);color:#0F6E56}
+.bp{background:var(--purple-bg);color:#3C3489}.br{background:var(--red-bg);color:#8B2323}
+h1{font-size:20px;font-weight:700;line-height:1.5}
+h2{font-size:17px;font-weight:600;line-height:1.5;margin-bottom:8px}
+button{font-family:inherit;font-size:15px;font-weight:600;padding:13px 20px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text);min-height:48px;transition:opacity .15s,transform .1s;-webkit-appearance:none}
+button:active{transform:scale(.97);opacity:.8}
+.btn-full{width:100%;margin-top:10px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--text);min-height:52px;-webkit-appearance:none;line-height:1.5;font-family:inherit}
+.opt:disabled{cursor:default}
+.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+@media(prefers-color-scheme:dark){
+  .opt.oc{background:#173404!important;border-color:#3B6D11!important;color:#C0DD97!important}
+  .opt.ow{background:#501313!important;border-color:#A32D2D!important;color:#F7C1C1!important}
+}
+.act{cursor:pointer;display:flex;align-items:center;gap:14px;padding:1.25rem;border-radius:16px;transition:background .15s}
+.act:active{background:var(--bg)!important}
+.ptrack{height:8px;background:var(--border);border-radius:4px;overflow:hidden;flex:1}
+.pfill{height:100%;border-radius:4px;transition:width .8s ease}
+.dot{width:9px;height:9px;border-radius:50%;flex-shrink:0}
+.stat-card{background:var(--bg);border-radius:12px;padding:12px;text-align:center;border:1px solid var(--border)}
+.feedback{padding:14px;border-radius:12px;margin-top:12px;border:1.5px solid}
+.feedback.ok{background:#E1F5EE;border-color:#639922}
+.feedback.ng{background:#FCEBEB;border-color:#A32D2D}
+@media(prefers-color-scheme:dark){
+  .feedback.ok{background:#04342C;border-color:#3B6D11}
+  .feedback.ng{background:#501313;border-color:#A32D2D}
+}
+@keyframes su{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+.su{animation:su .25s ease}
+.ibox{width:44px;height:44px;border-radius:14px;display:flex;align-items:center;justify-content:center;font-size:22px;flex-shrink:0}
+</style>
+</head>
+<body>
+<div class="app">
+  <div id="root"><div style="display:flex;align-items:center;justify-content:center;min-height:300px;color:var(--sub);font-size:15px">⏳ 読み込み中...</div></div>
+</div>
+<script>
+// ══════════════════════════
+// 問題バンク（論点追加のたびに追記）
+// ══════════════════════════
+const QS=[
+  {id:'tg1',topic:'減価償却（定額法）',concept:'目的・原則',
+   q:'減価償却を行う主な目的は何ですか？',
+   opts:['節税のため','費用と収益を対応させるため（費用収益対応の原則）','資産を早く消費するため','現金を節約するため'],
+   ans:1,hint:'PCは4年使うのに1年で全額費用にするのは不公平。費用収益対応の原則がキーワード。'},
+  {id:'tg2',topic:'減価償却（定額法）',concept:'定額法の計算',
+   q:'取得価額100,000円・耐用年数4年・残存価額ゼロ。定額法での年間減価償却費は？',
+   opts:['10,000円','20,000円','25,000円','40,000円'],
+   ans:2,hint:'定額法＝取得価額÷耐用年数。100,000÷4＝25,000円。'},
+  {id:'tg3',topic:'減価償却（定額法）',concept:'仕訳（間接法）',
+   q:'【引っ掛け】減価償却の仕訳（間接法）で、貸方に来るのはどれ？',
+   opts:['減価償却費','備品','現金','減価償却累計額'],
+   ans:3,hint:'間接法では資産を直接減らさず「減価償却累計額」で控除表示。費用は借方の「減価償却費」。'},
+  {id:'tr1',topic:'定率法 vs 定額法',concept:'定額法の特徴',
+   q:'定額法の特徴として正しいのはどれですか？',
+   opts:['最初の年の償却費が最も大きい','毎年同じ金額を費用として計上する','帳簿価額に償却率をかけて計算する','資産の価値減少の実態をそのまま反映する'],
+   ans:1,hint:'定額法＝毎年同額。「期首帳簿価額×償却率」は定率法の計算式。'},
+  {id:'tr2',topic:'定率法 vs 定額法',concept:'定率法の計算',
+   q:'取得価額200,000円・定率法償却率0.5のとき、2年目の減価償却費は？',
+   opts:['100,000円（1年目の数値）','50,000円','25,000円','200,000円'],
+   ans:1,hint:'定率法は期首帳簿価額×償却率。1年目末帳簿＝100,000円。2年目：100,000×0.5＝50,000円。'},
+  {id:'tr3',topic:'定率法 vs 定額法',concept:'定率法の計算式',
+   q:'【引っ掛け】定率法の計算式で、償却率をかける対象はどれ？',
+   opts:['取得価額','残存価額','期首帳簿価額','期末帳簿価額'],
+   ans:2,hint:'定率法＝期首帳簿価額×償却率。毎年変わる帳簿価額にかけるから逓減する。'},
+  {id:'bs1',topic:'固定資産の売却',concept:'帳簿価額の計算',
+   q:'固定資産の「帳簿価額」の計算式は？',
+   opts:['取得価額 ー 売却価格','取得価額 ー 減価償却累計額','売却価格 ー 減価償却累計額','取得価額 ÷ 耐用年数'],
+   ans:1,hint:'帳簿価額＝取得価額－減価償却累計額。「まだ費用化されていない部分」がB/S上の価値。'},
+  {id:'bs2',topic:'固定資産の売却',concept:'売却損益の計算',
+   q:'取得価額100,000円・減価償却累計額75,000円のPCを40,000円で売却。売却損益は？',
+   opts:['売却損35,000円','売却益40,000円','売却益15,000円','売却損25,000円'],
+   ans:2,hint:'帳簿価額25,000円。売却価格40,000－帳簿価額25,000＝売却益15,000円。'},
+  {id:'bs3',topic:'固定資産の売却',concept:'仕訳の処理',
+   q:'【引っ掛け】固定資産の売却仕訳で、減価償却累計額はどちらに記録する？',
+   opts:['貸方（評価額の減少）','借方（取消・相殺のため）','借方（費用として）','貸方（収益として）'],
+   ans:1,hint:'累計額はもともとB/S貸方の勘定。売却時に取り消すには借方に持ってきて相殺する。'},
+  {id:'ls1',topic:'リース取引',concept:'ファイナンスリースの条件',
+   q:'ファイナンスリースとして処理される条件の組み合わせは？',
+   opts:['解約可能 かつ 短期利用','解約不能 かつ フルペイアウト','月払い かつ 利息が発生する','リース会社が所有権を持つ'],
+   ans:1,hint:'ファイナンスリース＝解約不能＋フルペイアウト。この2条件を満たすと「実質的な購入」として資産計上する。'},
+  {id:'ls2',topic:'リース取引',concept:'開始時の仕訳',
+   q:'ファイナンスリース開始時の仕訳で正しいのは？',
+   opts:['支払リース料 XXX ／ 現金 XXX','リース資産 XXX ／ リース債務 XXX','現金 XXX ／ リース収入 XXX','リース債務 XXX ／ リース資産 XXX'],
+   ans:1,hint:'ファイナンスリースは「購入と同じ」扱い。開始時にリース資産とリース債務を同額で計上する。'},
+  {id:'ls3',topic:'リース取引',concept:'オペレーティングリース',
+   q:'【引っ掛け】オペレーティングリースの会計処理は？',
+   opts:['リース資産・リース債務を計上する','リース料支払時に費用計上するだけ','毎期リース資産の減価償却費を計上する','リース債務のみ計上する'],
+   ans:1,hint:'オペレーティングリース＝ただのレンタル。資産計上は不要。支払ったときに「支払リース料（費用）」のみ。'},
+];
+
+// ══════════════════════════
+// 状態・ストレージ
+// ══════════════════════════
+let D={r:{},sessions:[]};
+let V='home',queue=[],qi=0,sessRes=[],mode='',answered=false,chosen=-1;
+
+function loadData(){
+  try{const s=localStorage.getItem('b2_master');if(s)D=JSON.parse(s);}catch(e){}
+  render();
+}
+function saveData(){
+  try{localStorage.setItem('b2_master',JSON.stringify(D));}catch(e){}
+}
+
+// ══════════════════════════
+// 分析
+// ══════════════════════════
+function getAcc(id){const r=D.r[id];if(!r||r.n===0)return null;return r.c/r.n;}
+function getStatus(id){
+  const a=getAcc(id);const r=D.r[id];
+  if(a===null)return'new';
+  if(r.n>=3&&a>=0.8)return'mastered';
+  if(a>=0.5)return'ok';
+  return'weak';
+}
+function sColor(s){return s==='mastered'?'#1D9E75':s==='ok'?'#BA7517':s==='new'?'#aaa':'#A32D2D';}
+function sLabel(s){return s==='mastered'?'習得済み':s==='ok'?'練習中':s==='new'?'未挑戦':'要復習';}
+function getReadiness(){return Math.round(QS.filter(q=>getStatus(q.id)==='mastered').length/QS.length*100);}
+function getTopicStats(){
+  const t={};
+  QS.forEach(q=>{if(!t[q.topic])t[q.topic]={total:0,mastered:0,weak:0};const s=getStatus(q.id);t[q.topic].total++;if(s==='mastered')t[q.topic].mastered++;if(s==='weak')t[q.topic].weak++;});
+  return t;
+}
+function getPriority(id){
+  const s=getStatus(id);
+  if(s==='new')return 90+Math.random()*10;
+  if(s==='weak')return 70+Math.random()*20;
+  if(s==='ok')return 30+Math.random()*20;
+  return Math.random()*10;
+}
+function buildQueue(fn,n=10){return[...QS].filter(fn).sort((a,b)=>getPriority(b.id)-getPriority(a.id)).slice(0,n);}
+
+// ══════════════════════════
+// レンダリング
+// ══════════════════════════
+function render(){
+  const root=document.getElementById('root');
+  if(V==='home')root.innerHTML=rHome();
+  else if(V==='quiz')root.innerHTML=rQuiz();
+  else if(V==='result')root.innerHTML=rResult();
+  else if(V==='analysis'){root.innerHTML=rAnalysis();setTimeout(animBars,80);}
+}
+
+function rHome(){
+  const rd=readiness=getReadiness();
+  const ts=getTopicStats();
+  const stats={mastered:0,ok:0,weak:0,new:0};
+  QS.forEach(q=>stats[getStatus(q.id)]++);
+  const wk=stats.weak+stats.new;
+  const bc=rd>=80?'#1D9E75':rd>=50?'#BA7517':'#A32D2D';
+  const lastSession=D.sessions.length>0?D.sessions[D.sessions.length-1]:null;
+  return`<div class="su">
+<p style="font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 4px">簿記2級 合格プログラム</p>
+<h1 style="margin:0 0 16px">マスター問題集</h1>
+
+<div class="card" style="margin-bottom:12px">
+  <div style="display:flex;justify-content:space-between;align-items:flex-end;margin-bottom:10px">
+    <div>
+      <p style="font-size:12px;color:var(--sub);margin:0 0 2px">合格ライン進捗</p>
+      <p style="font-size:30px;font-weight:700;margin:0;color:${bc}">${rd}%<span style="font-size:13px;font-weight:400;color:var(--sub)"> ／ 目標80%</span></p>
+    </div>
+    <p style="font-size:13px;color:var(--sub);margin:0">${QS.length}問収録</p>
+  </div>
+  <div class="ptrack" style="height:10px;margin-bottom:12px"><div class="pfill" style="width:${rd}%;background:${bc}"></div></div>
+  <div style="display:grid;grid-template-columns:repeat(4,1fr);gap:6px">
+    ${[['mastered','習得済み','#1D9E75'],['ok','練習中','#BA7517'],['weak','要復習','#A32D2D'],['new','未挑戦','#aaa']].map(([k,l,c])=>
+    `<div class="stat-card"><p style="font-size:20px;font-weight:700;color:${c};margin:0">${stats[k]}</p><p style="font-size:11px;color:var(--sub);margin:0">${l}</p></div>`).join('')}
+  </div>
+  ${lastSession?`<p style="font-size:12px;color:var(--sub);margin:10px 0 0">前回：${lastSession.date}　${Math.round(lastSession.c/lastSession.n*100)}%正解</p>`:''}
+</div>
+
+<div style="display:flex;flex-direction:column;gap:8px">
+  <div class="card act" onclick="startQ('adaptive')">
+    <div class="ibox" style="background:var(--green-bg)">📚</div>
+    <div style="flex:1"><p style="font-size:15px;font-weight:600;margin:0 0 2px">今日の練習</p><p style="font-size:13px;color:var(--sub);margin:0">苦手優先10問。毎回最適化される。</p></div>
+    <span style="color:var(--sub);font-size:20px">›</span>
+  </div>
+  <div class="card act" onclick="startQ('weak')" style="${wk===0?'opacity:.45;pointer-events:none':''}">
+    <div class="ibox" style="background:${wk>0?'#FAECE7':'var(--bg)'}">🎯</div>
+    <div style="flex:1"><p style="font-size:15px;font-weight:600;margin:0 0 2px">弱点集中モード</p><p style="font-size:13px;color:var(--sub);margin:0">${wk>0?`要復習＋未挑戦の${wk}問に集中`:'現在の弱点なし。全問練習で維持しよう。'}</p></div>
+    <span style="color:var(--sub);font-size:20px">›</span>
+  </div>
+  <div class="card act" onclick="startQ('all')">
+    <div class="ibox" style="background:var(--purple-bg)">📋</div>
+    <div style="flex:1"><p style="font-size:15px;font-weight:600;margin:0 0 2px">全問ランダム</p><p style="font-size:13px;color:var(--sub);margin:0">全${QS.length}問をランダム順で出題（記憶定着用）</p></div>
+    <span style="color:var(--sub);font-size:20px">›</span>
+  </div>
+  <div class="card act" onclick="V='analysis';render()">
+    <div class="ibox" style="background:#E6F1FB">📊</div>
+    <div style="flex:1"><p style="font-size:15px;font-weight:600;margin:0 0 2px">分析レポート</p><p style="font-size:13px;color:var(--sub);margin:0">論点別マスター率・全問ステータス確認</p></div>
+    <span style="color:var(--sub);font-size:20px">›</span>
+  </div>
+</div>
+${D.sessions.length===0?`<p style="font-size:13px;color:var(--sub);text-align:center;margin-top:16px">まず「今日の練習」から始めよう。解くたびに蓄積されます。</p>`:''}
+</div>`;
+}
+
+let readiness=0;
+
+function startQ(m){
+  mode=m;
+  if(m==='adaptive')queue=buildQueue(()=>true,10);
+  else if(m==='weak')queue=buildQueue(q=>getStatus(q.id)==='weak'||getStatus(q.id)==='new');
+  else queue=[...QS].sort(()=>Math.random()-.5);
+  if(queue.length===0){V='home';render();return;}
+  qi=0;sessRes=[];answered=false;chosen=-1;V='quiz';render();
+}
+
+function rQuiz(){
+  const q=queue[qi];
+  const prog=Math.round(qi/queue.length*100);
+  const ml=mode==='adaptive'?'今日の練習':mode==='weak'?'弱点集中':'全問ランダム';
+  const st=getStatus(q.id);
+  let fb='';
+  if(answered){
+    const ok=chosen===q.ans;
+    fb=`<div class="feedback ${ok?'ok':'ng'}">
+      <p style="font-size:14px;font-weight:700;color:${ok?'#0F6E56':'#A32D2D'};margin:0 0 ${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>
+      ${q.hint?`<p style="font-size:13px;color:var(--sub);margin:0;line-height:1.6">💡 ${q.hint}</p>`:''}
+    </div>
+    <button class="btn-full" onclick="nextQ()" style="margin-top:12px">${qi+1<queue.length?'次の問題 →':'結果を見る →'}</button>`;
+  }
+  return`<div>
+<div style="display:flex;align-items:center;gap:8px;margin-bottom:16px">
+  <span class="badge bp" style="margin:0">${ml}</span>
+  <span style="font-size:12px;color:var(--sub)">${qi+1}/${queue.length}問</span>
+  <div class="ptrack"><div class="pfill" style="width:${prog}%;background:var(--amber)"></div></div>
+</div>
+<div class="card su">
+  <div style="display:flex;align-items:center;gap:8px;margin-bottom:12px">
+    <div class="dot" style="background:${sColor(st)}"></div>
+    <p style="font-size:12px;color:var(--sub);margin:0;flex:1">${q.topic} ／ ${q.concept}</p>
+    <span style="font-size:11px;padding:2px 8px;border-radius:6px;background:var(--bg);color:var(--sub)">${sLabel(st)}</span>
+  </div>
+  <p style="font-size:16px;font-weight:600;line-height:1.6;margin:0 0 16px;color:var(--text)">${q.q}</p>
+  <div>${q.opts.map((o,i)=>{let cl='opt';if(answered){if(i===q.ans)cl+=' oc';else if(i===chosen)cl+=' ow';}
+    return`<button class="${cl}" onclick="doAns(${i})" ${answered?'disabled':''}><span style="color:var(--sub);margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
+  }).join('')}</div>
+  ${fb}
+</div></div>`;
+}
+
+function doAns(i){
+  if(answered)return;
+  answered=true;chosen=i;
+  const q=queue[qi];const ok=i===q.ans;
+  sessRes.push({id:q.id,ok});
+  if(!D.r[q.id])D.r[q.id]={c:0,n:0};
+  if(ok)D.r[q.id].c++;
+  D.r[q.id].n++;
+  saveData();render();
+}
+
+function nextQ(){
+  qi++;answered=false;chosen=-1;
+  if(qi>=queue.length){finishSession();return;}
+  render();
+}
+
+function finishSession(){
+  const c=sessRes.filter(r=>r.ok).length;
+  const today=new Date().toLocaleDateString('ja-JP');
+  D.sessions.push({c,n:sessRes.length,date:today});
+  if(D.sessions.length>30)D.sessions=D.sessions.slice(-30);
+  saveData();V='result';render();
+}
+
+function rResult(){
+  const c=sessRes.filter(r=>r.ok).length,n=sessRes.length;
+  const pct=Math.round(c/n*100);
+  const rd=getReadiness();
+  const wrong=sessRes.filter(r=>!r.ok).map(r=>QS.find(q=>q.id===r.id)).filter(Boolean);
+  const bc=rd>=80?'#1D9E75':rd>=50?'#BA7517':'#A32D2D';
+  return`<div class="card su" style="padding:24px 20px">
+<div style="text-align:center;margin-bottom:20px">
+  <span class="badge ${pct>=80?'bt':pct>=50?'ba':'br'}" style="margin-bottom:12px">${mode==='adaptive'?'今日の練習':mode==='weak'?'弱点集中':'全問ランダム'} 完了</span>
+  <div style="font-size:54px;font-weight:700;color:${pct>=80?'#1D9E75':pct>=50?'#BA7517':'#A32D2D'}">${c}<span style="font-size:22px;color:var(--sub)">/${n}</span></div>
+  <p style="font-size:14px;color:var(--sub);margin:4px 0 0">${pct}% 正解</p>
+</div>
+
+<div style="background:var(--bg);border-radius:12px;padding:12px 14px;border:1px solid var(--border);margin-bottom:14px">
+  <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:6px">
+    <p style="font-size:13px;color:var(--sub);margin:0">合格ライン進捗</p>
+    <p style="font-size:15px;font-weight:700;color:${bc};margin:0">${rd}%</p>
+  </div>
+  <div class="ptrack" style="height:10px"><div class="pfill" style="width:${rd}%;background:${bc}"></div></div>
+</div>
+
+${wrong.length>0?`<div style="background:var(--bg);border-radius:12px;padding:12px 14px;border:1px solid var(--border);margin-bottom:14px">
+  <p style="font-size:13px;font-weight:700;margin:0 0 10px">今回間違えた問題（次回優先出題）</p>
+  ${wrong.map((q,i)=>`<div style="padding:8px 0;${i<wrong.length-1?'border-bottom:1px solid var(--border)':''}">
+    <p style="font-size:13px;color:var(--sub);margin:0 0 2px">${q.topic} ／ ${q.concept}</p>
+    <p style="font-size:13px;font-weight:600;color:#1D9E75;margin:0 0 3px">正解: ${q.opts[q.ans]}</p>
+    <p style="font-size:12px;color:var(--sub);line-height:1.5;margin:0">💡 ${q.hint}</p>
+  </div>`).join('')}
+</div>`
+:`<div style="background:#E1F5EE;border-radius:12px;padding:12px 14px;margin-bottom:14px"><p style="font-size:14px;font-weight:700;color:#0F6E56;margin:0">全問正解！🎉 完璧です</p></div>`}
+
+<div style="display:grid;grid-template-columns:1fr 1fr;gap:8px">
+  <button onclick="startQ('adaptive')" style="padding:12px">もう1セット</button>
+  <button onclick="V='analysis';render()" style="padding:12px">分析レポート</button>
+  <button onclick="startQ('weak')" style="padding:12px">弱点集中</button>
+  <button onclick="V='home';render()" style="padding:12px">ホーム</button>
+</div>
+</div>`;
+}
+
+function rAnalysis(){
+  const ts=getTopicStats();const rd=getReadiness();
+  const att=QS.filter(q=>D.r[q.id]&&D.r[q.id].n>0).length;
+  const tKeys=Object.keys(ts);
+  const bc=rd>=80?'#1D9E75':rd>=50?'#BA7517':'#A32D2D';
+  if(att===0)return`<div class="card su" style="text-align:center;padding:2rem">
+    <p style="font-size:32px;margin:0 0 8px">📊</p>
+    <p style="font-size:16px;font-weight:700;margin:0 0 8px">まだデータがありません</p>
+    <p style="font-size:14px;color:var(--sub);margin:0 0 20px">「今日の練習」に挑戦するとここに分析が表示されます。</p>
+    <button onclick="V='home';render()" style="padding:10px 24px">ホームに戻る</button>
+  </div>`;
+  return`<div class="su">
+<div style="display:flex;align-items:center;gap:10px;margin-bottom:16px">
+  <button onclick="V='home';render()" style="padding:6px 14px;font-size:13px">← 戻る</button>
+  <span style="font-size:16px;font-weight:700">分析レポート</span>
+</div>
+
+<div style="display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:12px">
+  <div class="stat-card"><p style="font-size:11px;color:var(--sub);margin:0 0 3px">合格ライン</p><p style="font-size:24px;font-weight:700;margin:0;color:${bc}">${rd}%</p></div>
+  <div class="stat-card"><p style="font-size:11px;color:var(--sub);margin:0 0 3px">習得済み</p><p style="font-size:24px;font-weight:700;margin:0;color:#1D9E75">${QS.filter(q=>getStatus(q.id)==='mastered').length}<span style="font-size:13px;color:var(--sub)">/${QS.length}</span></p></div>
+  <div class="stat-card"><p style="font-size:11px;color:var(--sub);margin:0 0 3px">要復習</p><p style="font-size:24px;font-weight:700;margin:0;color:#A32D2D">${QS.filter(q=>getStatus(q.id)==='weak').length}</p></div>
+</div>
+
+<div class="card" style="margin-bottom:12px">
+  <p style="font-size:14px;font-weight:700;margin:0 0 14px">論点別 マスター率</p>
+  ${tKeys.map((tp,i)=>{const s=ts[tp];const p=Math.round(s.mastered/s.total*100);
+    return`<div style="margin-bottom:${i<tKeys.length-1?'14px':'0'}">
+      <div style="display:flex;justify-content:space-between;margin-bottom:5px">
+        <span style="font-size:13px">${tp}</span>
+        <span style="font-size:13px;font-weight:700;color:${p>=80?'#1D9E75':p>=50?'#BA7517':'#A32D2D'}">${p}%</span>
+      </div>
+      <div class="ptrack"><div id="bar${i}" class="pfill" style="width:0%;background:${p>=80?'#1D9E75':p>=50?'#BA7517':'#A32D2D'}"></div></div>
+    </div>`;
+  }).join('')}
+</div>
+
+<div class="card" style="margin-bottom:12px">
+  <p style="font-size:14px;font-weight:700;margin:0 0 10px">全問題 ステータス</p>
+  ${QS.map((q,i)=>{const st=getStatus(q.id);const r=D.r[q.id];const p=r&&r.n>0?Math.round(r.c/r.n*100):null;
+    return`<div style="display:flex;align-items:center;gap:10px;padding:9px 0;${i<QS.length-1?'border-bottom:1px solid var(--border)':''}">
+      <div class="dot" style="background:${sColor(st)}"></div>
+      <div style="flex:1;min-width:0">
+        <p style="font-size:13px;margin:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">${q.concept}</p>
+        <p style="font-size:11px;color:var(--sub);margin:0">${q.topic}</p>
+      </div>
+      <div style="text-align:right;flex-shrink:0">
+        <p style="font-size:13px;font-weight:700;color:${sColor(st)};margin:0">${p!==null?p+'%':'--'}</p>
+        <p style="font-size:11px;color:var(--sub);margin:0">${sLabel(st)}</p>
+      </div>
+    </div>`;
+  }).join('')}
+</div>
+<button onclick="V='home';render()" style="width:100%;padding:12px">ホームに戻る</button>
+</div>`;
+}
+
+function animBars(){
+  const ts=getTopicStats();
+  Object.keys(ts).forEach((tp,i)=>{
+    const s=ts[tp];const p=Math.round(s.mastered/s.total*100);
+    const el=document.getElementById('bar'+i);
+    if(el)el.style.width=p+'%';
+  });
+}
+
+loadData();
+</script>
+</body>
+</html>
