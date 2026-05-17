@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0">
+<title>子会社・関連会社株式 | 簿記2級</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent}
+:root{--bg:#f8f7f4;--card:#fff;--text:#1a1a1a;--sub:#888;--border:#e5e5e5;--amber:#BA7517;--green:#1D9E75;--amber-bg:#FAEEDA;--green-bg:#E1F5EE;--purple-bg:#EEEDFE;--blue-bg:#E6F1FB;}
+@media(prefers-color-scheme:dark){:root{--bg:#111;--card:#1e1e1e;--text:#f0ede6;--sub:#999;--border:#333;--amber-bg:#412402;--green-bg:#04342C;--purple-bg:#26215C;--blue-bg:#042C53;}}
+body{font-family:-apple-system,BlinkMacSystemFont,'Hiragino Sans','Noto Sans JP',sans-serif;background:var(--bg);color:var(--text);min-height:100vh;padding:16px}
+.app{max-width:600px;margin:0 auto}
+.pbar{display:flex;align-items:center;gap:8px;margin-bottom:16px}
+.phase{font-size:12px;color:var(--sub);min-width:68px}.dots{flex:1;display:flex;gap:3px}.slbl{font-size:12px;color:var(--sub);min-width:36px;text-align:right}
+.dot{width:7px;height:7px;border-radius:50%;background:var(--border);transition:background .3s;flex-shrink:0}.dot.act{background:var(--amber)}.dot.dn{background:var(--green)}
+.card{background:var(--card);border-radius:16px;padding:20px;border:1px solid var(--border)}
+.badge{font-size:11px;font-weight:600;padding:4px 10px;border-radius:8px;display:inline-block;margin-bottom:12px}
+.ba{background:var(--amber-bg);color:#854F0B}.bt{background:var(--green-bg);color:#0F6E56}.bp{background:var(--purple-bg);color:#3C3489}.bb{background:var(--blue-bg);color:#185FA5}
+.ibox{width:52px;height:52px;border-radius:14px;background:var(--bg);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-size:24px;flex-shrink:0}
+button{font-family:inherit;font-size:15px;font-weight:600;padding:13px 20px;border-radius:12px;cursor:pointer;border:1.5px solid var(--border);background:var(--card);color:var(--text);min-height:48px;-webkit-appearance:none}
+button:active{opacity:.8}.btn-next{float:right;margin-top:16px}.btn-full{width:100%;margin-top:12px}
+.opt{width:100%;text-align:left;padding:14px 16px;margin:6px 0;border-radius:12px;font-size:15px;cursor:pointer;border:1.5px solid var(--border);background:var(--bg);color:var(--text);min-height:52px;-webkit-appearance:none;line-height:1.5;font-family:inherit}
+.opt:disabled{cursor:default}
+.opt.oc{background:#E1F5EE!important;border-color:#639922!important;color:#1a4d1a!important}
+.opt.ow{background:#FCEBEB!important;border-color:#A32D2D!important;color:#6b1a1a!important}
+@media(prefers-color-scheme:dark){.opt.oc{background:#173404!important;border-color:#3B6D11!important;color:#C0DD97!important}.opt.ow{background:#501313!important;border-color:#A32D2D!important;color:#F7C1C1!important}}
+.tbl{border:1px solid var(--border);border-radius:14px;overflow:hidden;margin:10px 0}
+.tside{padding:12px;background:var(--bg)}.tdiv{background:var(--border);width:1px}
+.jl{opacity:0;transform:translateX(-10px);transition:opacity .5s,transform .5s}
+.jr{opacity:0;transform:translateX(10px);transition:opacity .5s,transform .5s}
+.jl.sh,.jr.sh{opacity:1;transform:translateX(0)}
+.jlbl{font-size:11px;color:var(--sub);background:var(--bg);padding:3px 10px;border-radius:6px;display:inline-block;margin-bottom:8px;border:1px solid var(--border)}
+.entry{display:flex;justify-content:space-between;padding:8px 0;font-size:14px}.entry+.entry{border-top:1px solid var(--border)}
+.hint-box{background:var(--green-bg);border-radius:12px;padding:14px;border:1px solid #b8e6cc;margin-top:12px}
+@media(prefers-color-scheme:dark){.hint-box{background:var(--green-bg);border-color:#1D5040}}
+.feedback{padding:14px;border-radius:12px;margin-top:12px;border:1.5px solid}
+.feedback.ok{background:#E1F5EE;border-color:#639922}.feedback.ng{background:#FCEBEB;border-color:#A32D2D}
+@media(prefers-color-scheme:dark){.feedback.ok{background:#04342C;border-color:#3B6D11}.feedback.ng{background:#501313;border-color:#A32D2D}}
+.pbfill{height:4px;background:var(--border);border-radius:2px;overflow:hidden;flex:1}.pbbar{height:100%;background:var(--amber);border-radius:2px}
+.comp-table{width:100%;border-collapse:collapse;margin-top:12px;font-size:12px}
+.comp-table th{background:var(--bg);padding:8px 6px;border:1px solid var(--border);font-weight:600;text-align:center}
+.comp-table td{padding:8px 6px;border:1px solid var(--border);text-align:center;color:var(--sub)}
+.comp-table td.hl{font-weight:700}
+@keyframes su{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}.su{animation:su .3s ease}
+</style>
+</head>
+<body>
+<div class="app">
+  <div class="pbar"><span class="phase" id="ph">イントロ</span><div class="dots" id="dots"></div><span class="slbl" id="sl">1/11</span></div>
+  <div id="content"></div>
+</div>
+<script>
+const TOTAL=11;
+const phases=['イントロ','STEP 1','STEP 2','STEP 3','STEP 4','STEP 5','仕訳','Q1','Q2','Q3','結果'];
+const stories=[null,
+  {badge:'STEP 1',bc:'ba',icon:'🏢',title:'「支配目的で取引先の株を買う」',
+   body:'山田社長は取引先Aを支配・影響下に置くため、その株式500,000円を取得した。これは売買益を狙っているわけではない。この株式はどう分類・評価される？',ex:null},
+  {badge:'STEP 2',bc:'ba',icon:'📁',title:'子会社株式・関連会社株式は特別扱い',
+   body:'有価証券の分類は「保有目的」で決まる。支配目的（50%超）→ 子会社株式。影響力行使目的（20〜50%）→ 関連会社株式。どちらも時価評価しない。',ex:'comp'},
+  {badge:'STEP 3',bc:'bt',icon:'🔒',title:'「取得原価法」：期末に評価替えしない',
+   body:'子会社・関連会社株式は取得原価法で評価する。期末に時価が上がっても下がっても仕訳なし。なぜ？売却が目的ではないから時価変動は関係ない。',ex:null},
+  {badge:'STEP 4',bc:'bt',icon:'💡',title:'売却したときだけ損益が出る',
+   body:'取得原価500,000円の子会社株式を600,000円で売却した場合、売却益100,000円が発生。「子会社株式売却益」として特別利益に計上する。',ex:null},
+  {badge:'STEP 5',bc:'bb',icon:'⚠️',title:'例外：著しく価値が下落したら減損処理',
+   body:'実質価額が著しく低下した場合は減損処理が必要。「子会社株式評価損」を計上して帳簿価額を引き下げる。「著しく低下＝概ね50%以上の下落」が目安。',ex:null},
+];
+const quiz=[
+  {q:'子会社株式の期末評価方法は？',
+   opts:['時価法（毎期時価に評価替え）','低価法（時価と取得原価の低い方）','取得原価法（評価替えしない）','移動平均法'],
+   ans:2,hint:'子会社・関連会社株式は取得原価法。時価が変わっても期末に仕訳は不要（著しい下落時の減損を除く）。'},
+  {q:'取得原価500,000円の子会社株式を600,000円で売却した。売却益は？',
+   opts:['0円（評価替えしないため）','50,000円','100,000円','500,000円'],
+   ans:2,hint:'売却価格600,000 - 取得原価500,000 = 売却益100,000円。売却時だけ損益を認識する。'},
+  {q:'【引っ掛け】子会社株式の売却益はP/Lのどこに計上する？',
+   opts:['営業外収益','売上高','特別利益','純資産（評価差額金）'],
+   ans:2,hint:'子会社株式売却益は「特別利益」。売買目的有価証券の評価益（営業外収益）と混同しないよう注意。'},
+];
+let cur=0,score=0,answered=false,chosen=-1;
+function mkDots(){const d=document.getElementById('dots');d.innerHTML='';for(let i=0;i<TOTAL;i++){const e=document.createElement('div');e.className='dot'+(i===cur?' act':i<cur?' dn':'');d.appendChild(e);}}
+function render(){
+  document.getElementById('ph').textContent=phases[cur];
+  document.getElementById('sl').textContent=(cur+1)+'/'+TOTAL;
+  mkDots();const c=document.getElementById('content');
+  if(cur===0){c.innerHTML=`<div class="card su" style="text-align:center;padding:32px 20px">
+    <p style="font-size:12px;color:var(--sub);letter-spacing:.08em;margin:0 0 12px">簿記2級 × 有価証券</p>
+    <h1 style="font-size:21px;font-weight:700;line-height:1.6;margin:0 0 12px">支配目的で買った株が値上がり。<br>でも評価替えしないの？</h1>
+    <p style="font-size:15px;color:var(--sub);line-height:1.7;margin:0 0 24px">取得原価法の理由から<strong style="color:var(--text)">売却損益の処理</strong>まで。</p>
+    <button class="btn-full" onclick="go(1)">学習スタート →</button>
+  </div>`;return;}
+  if(cur>=1&&cur<=5){
+    const s=stories[cur];let ex='';
+    if(s.ex==='comp')ex=`<table class="comp-table">
+      <tr><th>種類</th><th>評価方法</th><th>差額の計上先</th></tr>
+      <tr><td>売買目的</td><td class="hl" style="color:#BA7517">時価法</td><td style="color:#BA7517">P/L（営業外）</td></tr>
+      <tr><td>その他</td><td class="hl" style="color:#185FA5">時価法</td><td style="color:#185FA5">純資産</td></tr>
+      <tr><td>子会社・関連会社</td><td class="hl" style="color:#1D9E75">取得原価法</td><td style="color:#1D9E75">なし</td></tr>
+    </table>`;
+    c.innerHTML=`<div class="card su"><span class="badge ${s.bc}">${s.badge}</span>
+    <div style="display:flex;gap:14px;align-items:flex-start">
+      <div class="ibox">${s.icon}</div>
+      <div style="flex:1"><h2 style="font-size:17px;font-weight:700;margin:0 0 8px">${s.title}</h2><p style="font-size:15px;color:var(--sub);line-height:1.7">${s.body}</p></div>
+    </div>${ex}
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(${cur+1})">${cur===5?'仕訳を見る →':'次へ →'}</button></div></div>`;return;
+  }
+  if(cur===6){
+    c.innerHTML=`<div class="card su"><span class="badge bp">仕訳アニメーション</span>
+    <h2 style="font-size:17px;font-weight:700;margin:0 0 4px">子会社株式の取得と売却</h2>
+    <p style="font-size:13px;color:var(--sub);margin:0 0 14px">取得500,000円 → 売却600,000円（期末評価替えなし）</p>
+
+    <span class="jlbl">① 取得時</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j1"><span style="font-weight:600">子会社株式</span><span style="color:var(--amber);font-weight:600">500,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j2"><span style="font-weight:600">現金</span><span style="color:var(--green);font-weight:600">500,000</span></div></div>
+    </div></div>
+    <p style="font-size:12px;color:var(--sub);margin:4px 0 14px;text-align:center">← 期末に時価が変わっても仕訳なし →</p>
+
+    <span class="jlbl" style="display:inline-block">② 売却時（取得原価500,000円を600,000円で売却）</span>
+    <div class="tbl"><div style="display:grid;grid-template-columns:1fr 1px 1fr">
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">借方</p>
+        <div class="entry jl" id="j3"><span style="font-weight:600">現金</span><span style="color:var(--amber);font-weight:600">600,000</span></div></div>
+      <div class="tdiv"></div>
+      <div class="tside"><p style="font-size:11px;color:var(--sub);text-align:center;margin:0 0 8px">貸方</p>
+        <div class="entry jr" id="j4"><span style="font-weight:600">子会社株式</span><span style="color:var(--green);font-weight:600">500,000</span></div>
+        <div class="entry jr" id="j5"><span style="font-weight:600">子会社株式売却益</span><span style="color:var(--green);font-weight:600">100,000</span></div></div>
+    </div></div>
+
+    <div class="hint-box"><p style="font-size:13px;font-weight:700;margin:0 0 6px;color:#0F6E56">ポイント</p>
+    <p style="font-size:13px;color:var(--sub);line-height:1.6">売却益は「特別利益」（営業外収益ではない）。売買目的の評価益（営業外）と区別すること。</p></div>
+    <div style="overflow:hidden"><button class="btn-next" onclick="go(7)">クイズへ →</button></div></div>`;
+    setTimeout(()=>{
+      ['j1','j2'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},i*400));
+      ['j3'].forEach(id=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},1000));
+      ['j4','j5'].forEach((id,i)=>setTimeout(()=>{const e=document.getElementById(id);if(e)e.classList.add('sh');},1400+i*400));
+    },150);return;
+  }
+  if(cur>=7&&cur<=9){
+    const qi=cur-7,q=quiz[qi];let fb='';
+    if(answered){const ok=chosen===q.ans;
+      fb=`<div class="feedback ${ok?'ok':'ng'}"><p style="font-size:14px;font-weight:700;color:${ok?'#0F6E56':'#A32D2D'};margin:0 0 ${q.hint?'8px':'0'}">${ok?'✓ 正解！':`✗ 不正解。正解は「${q.opts[q.ans]}」`}</p>${q.hint?`<p style="font-size:13px;color:var(--sub);line-height:1.6;margin:0">💡 ${q.hint}</p>`:''}</div>
+      <button class="btn-full" onclick="go(${cur+1})" style="margin-top:12px">${qi<2?'次の問題 →':'結果を見る →'}</button>`;}
+    c.innerHTML=`<div class="card su">
+    <div style="display:flex;align-items:center;gap:8px;margin-bottom:16px"><span class="badge bp" style="margin:0">Q${qi+1}</span><span style="font-size:12px;color:var(--sub)">${qi+1}/3問</span><div class="pbfill"><div class="pbbar" style="width:${qi/3*100}%"></div></div></div>
+    <p style="font-size:16px;font-weight:600;line-height:1.6;margin:0 0 16px">${q.q}</p>
+    <div>${q.opts.map((o,i)=>{let cl='opt';if(answered){if(i===q.ans)cl+=' oc';else if(i===chosen)cl+=' ow';}
+      return`<button class="${cl}" onclick="doAns(${qi},${i})" ${answered?'disabled':''}><span style="color:var(--sub);margin-right:8px;font-weight:400">${['A','B','C','D'][i]}.</span>${o}</button>`;
+    }).join('')}</div>${fb}</div>`;return;
+  }
+  if(cur===10){
+    const pct=Math.round(score/3*100);const col=score===3?'#1D9E75':score===2?'#BA7517':'#A32D2D';
+    c.innerHTML=`<div class="card su" style="text-align:center;padding:28px 20px">
+    <span class="badge ${score===3?'bt':'ba'}" style="margin-bottom:16px">${score===3?'完璧！':score===2?'あと少し！':'もう一回！'}</span>
+    <div style="font-size:54px;font-weight:700;color:${col};margin:8px 0">${score}<span style="font-size:22px;color:var(--sub)">/3</span></div>
+    <p style="color:var(--sub);margin:0 0 20px">${pct}% 正解</p>
+    <div style="text-align:left;background:var(--bg);border-radius:12px;padding:16px;border:1px solid var(--border);margin-bottom:20px">
+      <p style="font-size:13px;font-weight:700;margin:0 0 10px">今日の要点</p>
+      <ul style="padding-left:20px;color:var(--sub);font-size:14px;line-height:2.2">
+        <li>子会社・関連会社株式は<strong style="color:var(--text)">取得原価法</strong>（期末評価替えなし）</li>
+        <li>売却時のみ売却損益を認識</li>
+        <li>売却益は<strong style="color:var(--text)">特別利益</strong>（営業外収益ではない）</li>
+        <li>著しい価値下落時のみ減損処理</li>
+      </ul>
+    </div>
+    <button class="btn-full" onclick="restart()">最初からやり直す</button></div>`;
+  }
+}
+function go(n){cur=n;answered=false;chosen=-1;render();}
+function doAns(qi,i){if(answered)return;answered=true;chosen=i;if(i===quiz[qi].ans)score++;render();}
+function restart(){cur=0;score=0;answered=false;chosen=-1;render();}
+render();
+</script>
+</body>
+</html>
